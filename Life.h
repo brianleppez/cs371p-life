@@ -10,8 +10,9 @@ using namespace std;
 
 //AbstractCell class
 class AbstractCell{
-	protected:
+	private:
 		bool _dead;
+		int _neighborCount;
 	public:
 		AbstractCell() :
 		_dead(true){}
@@ -19,10 +20,13 @@ class AbstractCell{
 		bool is_dead () const{
 			return _dead;
 		}
+		 // evolve = 0; foce conway and fredkin to define.
 };
 
 //Cell class
-class Cell : public AbstractCell{
+class Cell {
+	AbstractCell* p;
+};
 	
 };
 
@@ -102,7 +106,7 @@ class Life{
 		unsigned int _population;
 		unsigned int _generation;
 		vector<vector<T > > _board;
-		vector<vector<unsigned int > > _neighborCount;
+		// vector<vector<unsigned int > > _neighborCount;
 	public:
 		// Life(int rows, int cols) :
 		// 	_rows (rows),
@@ -112,10 +116,11 @@ class Life{
 		// 	_board (rows, std::vector<T > (cols)),
 		// 	_neighborCount (rows, std::vector<unsigned int>(cols)) 
 		// {}
-		Life(std::istream& input) : 
+		Life(int rows, int columns) : 
+
 			_population(0),
 			_generation(0),
-			_board(),
+			_board(rows, columns), 
 			_neighborCount()
 			{
 				input>>_rows;
