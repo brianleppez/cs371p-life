@@ -15,9 +15,18 @@ class AbstractCell{
 	public:
 		AbstractCell() : _dead(true) {}
 
-		virtual void print(ostream& w) = 0;
+		virtual void print(ostream& w) const = 0;
 
 		bool is_dead () const { return _dead;}
+<<<<<<< HEAD
+
+		void setDead(bool b) {
+			_dead = b;
+		}
+
+		//void incrementNC { _neighborCount++};
+=======
+>>>>>>> c3304d862c101c300a4d21e86ac1656b68e8762a
 		
 		// evolve = 0; foce conway and fredkin to define.
 };
@@ -26,14 +35,18 @@ class AbstractCell{
 class Cell {
 	AbstractCell* p;
 };
+<<<<<<< HEAD
+=======
 
+>>>>>>> c3304d862c101c300a4d21e86ac1656b68e8762a
 
 //ConwayCell class
 class ConwayCell : public AbstractCell{
 	
 	public:
-		void print(ostream& w) const{
-			if(_dead){
+		ConwayCell(){}
+		void print(ostream& w) const {
+			if(is_dead()){
 				w<<".";
 			}
 			else{
@@ -45,10 +58,10 @@ class ConwayCell : public AbstractCell{
 			char c;
 			input>>c;
 			if (c == '.'){
-				_dead = true;
+				setDead(true);
 			}
 			else if (c == '*'){
-				_dead = false;
+				setDead(false);
 			}
 			else {
 				cout<<"Bad input for ConwayCell";
@@ -133,7 +146,7 @@ class FredkinCell : public AbstractCell{
 		unsigned int _age;
 	public:
 		void print(ostream& w) const{
-			if(_dead){
+			if(is_dead()){
 				w<<"-";
 			}
 			else if (_age > 9){
@@ -147,15 +160,15 @@ class FredkinCell : public AbstractCell{
 			char c;
 			input>>c;
 			if (c == '-'){
-				_dead = true;
+				setDead(true);
 				_age = 0;
 			}
 			else if (c >= '0' && c <= '9'){
-				_dead = false;
+				setDead(false);
 				_age = c - '0';
 			}
 			else if (c == '+'){
-				_dead = false;
+				setDead(false);
 				_age = 10;
 			}
 			else {
@@ -249,6 +262,11 @@ class Life{
 		Life(int rows, int columns) : 
 			_population(0),
 			_generation(0),
+<<<<<<< HEAD
+			_board(rows, vector<T>(columns)) 
+			{life_print();}
+
+=======
             _rows(rows),
             _cols(columns),
 			_board(rows, columns)
@@ -258,12 +276,15 @@ class Life{
                     _neighborCount[i].resize(_cols);
                 }
             }
+>>>>>>> c3304d862c101c300a4d21e86ac1656b68e8762a
 			
 		void life_print(std::ostream& w = std::cout){
+			w << "Rows: " << _board.size() << " Column: " << _board[0].size() << endl;
 			w<<"Generation = "<<_generation<<", Population = "<<_population<<"."<<endl;
-			for (int i = 0; i < _rows; i++){
-				for (int j = 0; j < _cols; j++){
-					_board[i][j].print_self(w);
+			for (int i = 0; i < _board.size(); i++){
+				for (int j = 0; j < _board[0].size(); j++){
+					_board[i][j].set();
+					_board[i][j].print(w);
 				}
 				w<<endl;
 			}

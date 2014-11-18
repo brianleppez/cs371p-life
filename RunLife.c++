@@ -10,20 +10,19 @@
 
 #include <cassert>  // assert
 #include <iostream> // cout, endl
-
+#include "Life.h"
 using namespace std;
 
+template <typename T>
 Life<T> RunLife_read (istream& r) {
     int rows;
     r >> rows;
     int columns;
     r >> columns;
-    Life x(rows, columns);
-    for (int i = 0; i < _rows; i++) {
-        for (int j = 0; j < _cols; j++){
-            _board[i][j].set(r); 
-        }
-    }
+    Life<T> x(rows, columns);
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < columns; ++j) {
+            x.set(r);
     return x;
 }
 
@@ -40,7 +39,7 @@ int main () {
     // -----------------
 
     cout << "*** Life<ConwayCell> 21x13 ***" << endl;
-    Life life = RunLife_read(cin);
+    Life<ConwayCell> conway1 = RunLife_read<ConwayCell>(cin);
     /*
     Simulate 12 evolutions.
     Print every grid (i.e. 0, 1, 2, 3, ... 12)
