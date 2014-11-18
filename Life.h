@@ -54,7 +54,77 @@ class ConwayCell : public AbstractCell{
 				cout<<"Bad input for ConwayCell";
 				assert(false);
 			}
-		}
+        }
+        /*Neighbor spots defined by ints (X is current cell):
+           2
+          1 3
+         0 X 4
+          7 5
+           6
+         */
+        string update_count_regular() const{
+            if (_dead) {
+                return "";
+            }
+            else {
+                return "01234567";
+            }
+        }
+        string update_count_corner(int i) const{
+            /*Corner spot defined by ints:
+             0 1
+             2 3
+             */
+            if (_dead) {
+                return "";
+            }
+            else {
+                if (i == 0) {
+                    return "456";
+                }
+                else if (i == 1){
+                    return "670";
+                }
+                else if (i == 2){
+                    return "234";
+                }
+                else if (i == 3){
+                    return "012";
+                }
+                else{
+                    cout<<"update count corner i is not 0 - 3";
+                    assert(false);
+                }
+            }
+        }
+        string update_count_edge(int i) const{
+            /*Edge spot defined by ints
+              1
+             0 2
+              3
+             */
+            if (_dead) {
+                return "";
+            }
+            else {
+                if (i == 0) {
+                    return "23456";
+                }
+                else if (i == 1){
+                    return "45670";
+                }
+                else if (i == 2){
+                    return "67012";
+                }
+                else if (i == 3){
+                    return "01234";
+                }
+                else{
+                    cout<<"update count edge i is not 0 - 3";
+                    assert(false);
+                }
+            }
+        }
 };
 
 //FredkinCell class
@@ -92,7 +162,77 @@ class FredkinCell : public AbstractCell{
 				cout<<"Bad input for FredkinCell";
 				assert(false);
 			}
-		}
+        }
+        /*Neighbor spots defined by ints (X is current cell):
+           2
+          1 3
+         0 X 4
+          7 5
+           6
+         */
+        string update_count_regular() const{
+            if (_dead) {
+                return "";
+            }
+            else {
+                return "0246";
+            }
+        }
+        string update_count_corner(int i) const{
+            /*Corner spot defined by ints:
+             0 1
+             2 3
+             */
+            if (_dead) {
+                return "";
+            }
+            else {
+                if (i == 0) {
+                    return "46";
+                }
+                else if (i == 1){
+                    return "60";
+                }
+                else if (i == 2){
+                    return "24";
+                }
+                else if (i == 3){
+                    return "02";
+                }
+                else{
+                    cout<<"update count corner i is not 0 - 3";
+                    assert(false);
+                }
+            }
+        }
+        string update_count_edge(int i) const{
+            /*Edge spot defined by ints
+              1
+             0 2
+              3
+             */
+            if (_dead) {
+                return "";
+            }
+            else {
+                if (i == 0) {
+                    return "246";
+                }
+                else if (i == 1){
+                    return "460";
+                }
+                else if (i == 2){
+                    return "602";
+                }
+                else if (i == 3){
+                    return "024";
+                }
+                else{
+                    cout<<"update count corner i is not 0 - 3";
+                    assert(false);
+                }
+            }
+        }
 };
 
 //Life class
