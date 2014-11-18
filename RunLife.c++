@@ -11,18 +11,36 @@
 #include <cassert>  // assert
 #include <iostream> // cout, endl
 
+using namespace std;
+
+Life<T> RunLife_read (istream& r) {
+    int rows;
+    r >> rows;
+    int columns;
+    r >> columns;
+    Life x(rows, columns);
+    for (int i = 0; i < _rows; i++) {
+        for (int j = 0; j < _cols; j++){
+            _board[i][j].set(r); 
+        }
+    }
+    return x;
+}
+
+
 // ----
 // main
 // ----
 
 int main () {
-    using namespace std;
+ 
 
     // -----------------
     // Conway Cell 21x13
     // -----------------
 
     cout << "*** Life<ConwayCell> 21x13 ***" << endl;
+    Life life = RunLife_read(cin);
     /*
     Simulate 12 evolutions.
     Print every grid (i.e. 0, 1, 2, 3, ... 12)

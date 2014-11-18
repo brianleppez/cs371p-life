@@ -10,15 +10,6 @@
 
 using namespace std;
  int main(){
- 	ifstream myfile;
- // 	myfile.open("FredkinTest.txt");
- // 	Life<FredkinCell> l(myfile);
- // 	myfile.close();
-	// l.life_print();
-	myfile.open("ConwayTest.txt");
-	Life<ConwayCell> l(myfile);
-	myfile.close();
-	l.life_print();
-
+	
 	return 0;
 }
