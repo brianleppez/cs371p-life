@@ -14,7 +14,7 @@ class AbstractCell{
 		bool _dead;
 		int neighborCount;
 	public:
-		AbstractCell() : _dead(true) {}
+		// Default constructor given for free.
 
 		virtual void print(std::ostream& w) const = 0;
 
