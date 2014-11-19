@@ -16,7 +16,9 @@ class AbstractCell{
 	public:
 		AbstractCell() : _dead(true) {}
 
-		virtual void print(ostream& w) const = 0;
+		virtual void print(std::ostream& w) const = 0;
+
+        virtual char set(std::istream& input) = 0;
 
 
 		//void incrementNC { _neighborCount++};
@@ -44,7 +46,7 @@ class ConwayCell : public AbstractCell{
 			}
 			
 		}
-		void set(std::istream& input){
+		char set(std::istream& input){
 			char c;
 			input>>c;
 			if (c == '.'){
@@ -57,6 +59,7 @@ class ConwayCell : public AbstractCell{
 				cout<<"Bad input for ConwayCell";
 				assert(false);
 			}
+            return c;
         }
         /*Neighbor spots defined by ints (X is current cell):
            2
@@ -146,14 +149,14 @@ class FredkinCell : public AbstractCell{
 				w<<_age;
 			}
 		}
-		void set(std::istream& input){
+		char set(std::istream& input){
 			char c;
 			input>>c;
 			if (c == '-'){
 				_dead = true;
 				_age = 0;
 			}
-			else if (c >= '0' && c <= '9'){
+			else if (c >= '0' && c <= '9') {
 				_dead = true;
 				_age = c - '0';
 			}
@@ -165,6 +168,7 @@ class FredkinCell : public AbstractCell{
 				cout<<"Bad input for FredkinCell";
 				assert(false);
 			}
+            return c;
         }
         /*Neighbor spots defined by ints (X is current cell):
            2
@@ -253,9 +257,18 @@ class Life{
 			_board(rows, vector<T>(columns)) 
 			{}
 
-            			
+        void life_set(std::istream& r = std::cin) {
+            for (int i = 0; i < _board.size(); ++i) {
+                for (int j = 0; j < _board[0].size(); ++j) {
+                    char c =_board[i][j].set(r);
+                    if ((c >= '0' && c <= '9') || c == '*' || c == '+') {
+                        _population++;
+                    }
+                }
+            }
+        }
+
 		void life_print(std::ostream& w = std::cout){
-			w << "Rows: " << _board.size() << " Column: " << _board[0].size() << endl;
 			w<<"Generation = "<<_generation<<", Population = "<<_population<<"."<<endl;
 			for (int i = 0; i < _board.size(); i++){
 				for (int j = 0; j < _board[0].size(); j++){
@@ -265,13 +278,7 @@ class Life{
 			}
 			w<<endl;
         }
-        void life_set(std::istream& r = std::cin) {
-        	for (int i = 0; i < _board.size(); ++i) {
-        		for (int j = 0; j < _board[0].size(); ++j) {
-        			_board[i][j].set(r);
-        		}
-        	}
-        }
+
 
         /*
         void count_print(std::ostream& w = std::cout){

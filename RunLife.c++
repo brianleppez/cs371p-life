@@ -20,7 +20,7 @@ Life<T> RunLife_read (istream& r) {
     int columns;
     r >> columns;
     Life<T> temp(rows, columns);
-    temp.set<T>(r);
+    temp.life_set(r);
     return temp;
 }
 
@@ -36,8 +36,9 @@ int main () {
     // Conway Cell 21x13
     // -----------------
 
-    cout << "*** Life<ConwayCell> 21x13 ***" << endl;
+    cout << "*** Life<ConwayCell> 21x13 ***\n" << endl;
     Life<ConwayCell> conway1 = RunLife_read<ConwayCell>(cin);
+    conway1.life_print();
     /*
     Simulate 12 evolutions.
     Print every grid (i.e. 0, 1, 2, 3, ... 12)
