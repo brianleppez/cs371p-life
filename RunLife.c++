@@ -19,11 +19,9 @@ Life<T> RunLife_read (istream& r) {
     r >> rows;
     int columns;
     r >> columns;
-    Life<T> x(rows, columns);
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < columns; ++j) {
-            x.set(r);
-    return x;
+    Life<T> temp(rows, columns);
+    temp.set<T>(r);
+    return temp;
 }
 
 
