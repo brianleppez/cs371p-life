@@ -14,7 +14,7 @@
 using namespace std;
 
 template <typename T>
-Life<T> RunLife_read (istream& r) {
+Life<T> RunLife_read (istream& r = std::cin) {
     int rows;
     r >> rows;
     int columns;
@@ -37,7 +37,7 @@ int main () {
     // -----------------
 
     cout << "*** Life<ConwayCell> 21x13 ***\n" << endl;
-    Life<ConwayCell> conway1 = RunLife_read<ConwayCell>(cin);
+    Life<ConwayCell> conway1 = RunLife_read<ConwayCell>();
     conway1.life_print();
     /*
     Simulate 12 evolutions.
