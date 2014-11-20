@@ -6,13 +6,16 @@
 #include <algorithm>
 #include <sstream>
 
+#include "Handle.h"
+
 using namespace std;
 
 //AbstractCell class
-class AbstractCell{
+class AbstractCell {
 	protected:
 		bool _dead;
-		int neighborCount;
+    private:
+		int _neighborCount;
 	public:
 		// Default constructor given for free.
 
@@ -20,20 +23,52 @@ class AbstractCell{
 
         virtual char set(std::istream& input) = 0;
 
+        int getNeighborCount () { return _neighborCount; }
 
-		//void incrementNC { _neighborCount++};
+        void incrementNC () { _neighborCount++; }
+
+        void resetNC () { _neighborCount = 0; }
 		
 		// evolve = 0; foce conway and fredkin to define.
 };
 
 //Cell class
-class Cell {
-	AbstractCell* p;
-};
+struct Cell : Handle<AbstractCell> {
+    Cell (AbstractCell* p) : 
+            Handle<AbstractCell> (p)
+        {
+            p = new FredkinCell();
+        }
+    void print(ostream& w) const {
+        return get()->print(w);
+    }
+    char set(std::istream& input){
+        return get()->set(input);
+    }
+    string check_regulars() const {
+        return get()->check_regulars();
+    }
+    string check_corners() const {
+        return get()->check_corners();
+    }
+    string check_edges() const {
+        return get()->check_edges();
+    }
+    int kill_revive() {
+        return get()->kill_revive();
+    }
+    void change_types() {
+        Cell c = new ConwayCell();
+        swap(c);
+    }
+
+    void evolve(){
+        p = new ConwayCell();
+    }
 
 
 //ConwayCell class
-class ConwayCell : public AbstractCell{
+class ConwayCell : public AbstractCell {
 	
 	public:
 		ConwayCell() {}
@@ -68,7 +103,7 @@ class ConwayCell : public AbstractCell{
           7 5
            6
          */
-        string update_count_regular() const{
+        string check_regulars() const {
             if (_dead) {
                 return "";
             }
@@ -76,7 +111,7 @@ class ConwayCell : public AbstractCell{
                 return "01234567";
             }
         }
-        string update_count_corner(int i) const{
+        string check_corners(int i) const {
             /*Corner spot defined by ints:
              0 1
              2 3
@@ -103,7 +138,9 @@ class ConwayCell : public AbstractCell{
                 }
             }
         }
-        string update_count_edge(int i) const{
+
+
+        string check_edges(int i) const {
             /*Edge spot defined by ints
               1
              0 2
@@ -131,37 +168,55 @@ class ConwayCell : public AbstractCell{
                 }
             }
         }
+
+        int kill_revive() {
+            int v = 0;
+            if (_dead) {
+                if (getNeighborCount() == 3) {
+                    _dead = false;
+                    v = 1;
+                }
+            }
+            else {
+                if (getNeighborCount() != 2 && getNeighborCount() != 3) {
+                    _dead = true;
+                    v = -1;
+                }
+            }
+            resetNC();
+            return v;
+        }
 };
 
 //FredkinCell class
-class FredkinCell : public AbstractCell{
+class FredkinCell : public AbstractCell {
 	private:
 		unsigned int _age;
 	public:
 		void print(ostream& w) const{
 			if(_dead){
-				w<<"-";
+				w << "-";
 			}
 			else if (_age > 9){
-				w<<"+";
+				w << "+";
 			}
 			else{
-				w<<_age;
+				w << _age;
 			}
 		}
 		char set(std::istream& input){
 			char c;
-			input>>c;
+			input >> c;
 			if (c == '-'){
 				_dead = true;
 				_age = 0;
 			}
 			else if (c >= '0' && c <= '9') {
-				_dead = true;
+				_dead = false;
 				_age = c - '0';
 			}
 			else if (c == '+'){
-				_dead = true;
+				_dead = false;
 				_age = 10;
 			}
 			else {
@@ -177,7 +232,7 @@ class FredkinCell : public AbstractCell{
           7 5
            6
          */
-        string update_count_regular() const{
+        string check_regulars() const{
             if (_dead) {
                 return "";
             }
@@ -185,7 +240,7 @@ class FredkinCell : public AbstractCell{
                 return "0246";
             }
         }
-        string update_count_corner(int i) const{
+        string check_corners(int i) const{
             /*Corner spot defined by ints:
              0 1
              2 3
@@ -212,7 +267,7 @@ class FredkinCell : public AbstractCell{
                 }
             }
         }
-        string update_count_edge(int i) const{
+        string check_edges(int i) const{
             /*Edge spot defined by ints
               1
              0 2
@@ -240,26 +295,54 @@ class FredkinCell : public AbstractCell{
                 }
             }
         }
+
+        int kill_revive() {
+            int v = 0;
+            if (_dead) {
+                if (getNeighborCount() == 3 || getNeighborCount() == 1) {
+                    _dead = false;
+                    v = 1;
+                }
+
+            }
+            else {
+                if (getNeighborCount() == 2 || getNeighborCount() == 0 || getNeighborCount() == 4) {
+                    _dead = true;
+                    v = -1;
+                }
+                else {
+                    _age++;
+                }
+            }
+            resetNC();
+            return v;
+        }
 };
 
 //Life class
 template <typename T>
 class Life{
     private:
+        unsigned int _rows;
+        unsigned int _cols;
 		unsigned int _population;
 		unsigned int _generation;
         vector<vector<T > > _board;
         vector<vector<unsigned int > > _neighborCount;
 	public:
-		Life(int rows, int columns) : 
-			_population(0),
-			_generation(0),
+		Life(unsigned int rows, unsigned int columns) : 
+
+            _rows(rows),
+            _cols(columns),
+            _population(0),
+            _generation(0),
 			_board(rows, vector<T>(columns)) 
 			{}
 
+
         void life_set(std::istream& r = std::cin) {
-            for (int i = 0; i < _board.size(); ++i) {
-                for (int j = 0; j < _board[0].size(); ++j) {
+            for (unsigned int i = 0; i < _rows; ++i) {
+                for (unsigned int j = 0; j < _cols; ++j) {
                     char c =_board[i][j].set(r);
                     if ((c >= '0' && c <= '9') || c == '*' || c == '+') {
                         _population++;
@@ -268,10 +351,18 @@ class Life{
             }
         }
 
-		void life_print(std::ostream& w = std::cout){
+        void life_read (istream& r = std::cin) {
+            r.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            r.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            r.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            life_set(r);
+            r >> ws;
+        }
+
+		void life_print(std::ostream& w = std::cout) const {
 			w<<"Generation = "<<_generation<<", Population = "<<_population<<"."<<endl;
-			for (int i = 0; i < _board.size(); i++){
-				for (int j = 0; j < _board[0].size(); j++){
+			for (unsigned int i = 0; i < _rows; i++){
+				for (unsigned int j = 0; j < _cols; j++){
 					_board[i][j].print(w);
 				}
 				w<<endl;
@@ -280,53 +371,48 @@ class Life{
         }
 
 
-        /*
-        void count_print(std::ostream& w = std::cout){
+       /* void count_print(std::ostream& w = std::cout){
             //prints the _neighborCount matrix
             for (int i = 0; i < _rows; i++){
                 for (int j = 0; j < _cols; j++){
-                    w<<_neighborCount[i][j];
+                    w<< _board[i][j].getNeighborCount();
                 }
                 w<<endl;
             }
             w<<endl;
         }
+*/
         void update_neighbor_count(int row, int col, char neighbor){
             //Given the coordinates of a live cell, updates the neighbor count
             //in the direction of "neighbor".
             if (neighbor == '0') {
-                _neighborCount[row][col - 1] += 1;
+                _board[row][col - 1].incrementNC();
             }
             else if (neighbor == '1') {
-                _neighborCount[row - 1][col - 1] += 1;
+                _board[row - 1][col - 1].incrementNC();
             }
             else if (neighbor == '2') {
-                _neighborCount[row - 1][col] += 1;
+                _board[row - 1][col].incrementNC();
             }
             else if (neighbor == '3') {
-                _neighborCount[row - 1][col + 1] += 1;
+                _board[row - 1][col + 1].incrementNC();
             }
             else if (neighbor == '4') {
-                _neighborCount[row][col + 1] += 1;
+                _board[row][col + 1].incrementNC();
             }
             else if (neighbor == '5') {
-                _neighborCount[row + 1][col + 1] += 1;
+                _board[row + 1][col + 1].incrementNC();
             }
             else if (neighbor == '6') {
-                _neighborCount[row + 1][col] += 1;
+                _board[row + 1][col].incrementNC();
             }
             else if (neighbor == '7') {
-                _neighborCount[row + 1][col - 1] += 1;
-            }
-            else{
-                cout<<"Update_neighbor_count: neighbor input is not 0 - 7, "<<neighbor<<endl;
-                int i = 0;
-                while (i != -1) {
-                    i++;
-                }
+                _board[row + 1][col - 1].incrementNC();
             }
             
         }
+
+
         void update_counts(){
             //Updates the neighbor counts by going through every spot in the board and incrementing
             //corresponding neighbors to live cells (starts with corners, then does edges, then
@@ -335,9 +421,9 @@ class Life{
             string neighbor = "";
             int len = 0;
             //Update corners
-            for (int i = 0; i < 2; i++) {
-                for (int j = 0; j < 2; j++) {
-                    cornerNeighborsToUpdate = _board[(i * (_rows - 1))][(j * (_cols - 1))].update_count_corner((2 * i) + j);
+            for (unsigned int i = 0; i < 2; i++) {
+                for (unsigned int j = 0; j < 2; j++) {
+                    cornerNeighborsToUpdate = _board[(i * (_rows - 1))][(j * (_cols - 1))].check_corners((2 * i) + j);
                     len = cornerNeighborsToUpdate.length();
                     if (len != 0) {
                         neighbor = cornerNeighborsToUpdate;
@@ -351,10 +437,10 @@ class Life{
             }
             //Update edges
             string edgeNeighborsToUpdate = "";
-            for (int i = 0; i < 4; i++) {
-                int j = 1;
+            for (unsigned int i = 0; i < 4; i++) {
+                unsigned int j = 1;
                 while ((j < _rows - 1) && (i % 2 == 0)) {
-                    edgeNeighborsToUpdate = _board[j][(i / 2) * (_cols - 1)].update_count_edge(i);
+                    edgeNeighborsToUpdate = _board[j][(i / 2) * (_cols - 1)].check_edges(i);
                     len = edgeNeighborsToUpdate.length();
                     if (len != 0) {
                         neighbor = edgeNeighborsToUpdate;
@@ -367,7 +453,7 @@ class Life{
                     j++;
                 }
                 while ((j < _cols - 1) && (i % 2 == 1)) {
-                    edgeNeighborsToUpdate = _board[(i / 2) * (_rows - 1)][j].update_count_edge(i);
+                    edgeNeighborsToUpdate = _board[(i / 2) * (_rows - 1)][j].check_edges(i);
                     len = edgeNeighborsToUpdate.length();
                     if (len != 0) {
                         neighbor = edgeNeighborsToUpdate;
@@ -382,9 +468,9 @@ class Life{
             }
             //Update everything else
             string regularNeighborsToUpdate = "";
-            for (int i = 1; i < _rows - 1; i++) {
-                for (int j = 1; j < _cols - 1; j++) {
-                    regularNeighborsToUpdate = _board[i][j].update_count_regular();
+            for (unsigned int i = 1; i < _rows - 1; i++) {
+                for (unsigned int j = 1; j < _cols - 1; j++) {
+                    regularNeighborsToUpdate = _board[i][j].check_regulars();
                     len = regularNeighborsToUpdate.length();
                     if (len != 0) {
                         neighbor = regularNeighborsToUpdate;
@@ -397,7 +483,31 @@ class Life{
                 }
             }
         }
-        */
+
+        void life_kill_revive() {
+            for (unsigned i = 0; i < _rows; ++i) {
+                for (unsigned j = 0; j < _cols; ++j) {
+                    _population += _board[i][j].kill_revive();
+
+                }
+            }
+        }
+
+        void life_run (unsigned int generations, unsigned int interval = 1) {
+            if (_generation == 0) {
+                life_print();
+            }
+            for (unsigned int i = 1; i <= generations; ++i) {
+                update_counts();
+                life_kill_revive();
+                _generation++;
+                if (i % interval == 0) {
+                    life_print();
+                }
+
+            }
+        }
+        
 };
 
 
