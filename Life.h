@@ -35,38 +35,38 @@ class AbstractCell {
 };
 
 //Cell class
-struct Cell : Handle<AbstractCell> {
-    Cell (AbstractCell* p) : 
-            Handle<AbstractCell> (p)
-        {
-            p = new FredkinCell();
-        }
-    void print(ostream& w) const {
-        return get()->print(w);
-    }
-    char set(std::istream& input){
-        return get()->set(input);
-    }
-    string check_regulars() const {
-        return get()->check_regulars();
-    }
-    string check_corners() const {
-        return get()->check_corners();
-    }
-    string check_edges() const {
-        return get()->check_edges();
-    }
-    int kill_revive() {
-        return get()->kill_revive();
-    }
-    void change_types() {
-        Cell c = new ConwayCell();
-        swap(c);
-    }
-
-    void evolve(){
-        p = new ConwayCell();
-    }
+//struct Cell : Handle<AbstractCell> {
+//    Cell (AbstractCell* p) : 
+//            Handle<AbstractCell> (p)
+//        {
+//            p = new FredkinCell();
+//        }
+//    void print(ostream& w) const {
+//        return get()->print(w);
+//    }
+//    char set(std::istream& input){
+//        return get()->set(input);
+//    }
+//    string check_regulars() const {
+//        return get()->check_regulars();
+//    }
+//    string check_corners() const {
+//        return get()->check_corners();
+//    }
+//    string check_edges() const {
+//        return get()->check_edges();
+//    }
+//    int kill_revive() {
+//        return get()->kill_revive();
+//    }
+//    void change_types() {
+//        Cell c = new ConwayCell();
+//        swap(c);
+//    }
+//
+//    void evolve(){
+//        p = new ConwayCell();
+//    }
 
 
 //ConwayCell class
@@ -95,7 +95,8 @@ class ConwayCell : public AbstractCell {
 			else {
 				cout<<"Bad input for ConwayCell";
 				assert(false);
-			}
+            }
+            resetNC();
             return c;
         }
         /*Neighbor spots defined by ints (X is current cell):
@@ -225,6 +226,7 @@ class FredkinCell : public AbstractCell {
 				cout<<"Bad input for FredkinCell";
 				assert(false);
 			}
+            resetNC();
             return c;
         }
     
@@ -336,7 +338,6 @@ class Life{
 		unsigned int _population;
 		unsigned int _generation;
         vector<vector<T > > _board;
-        vector<vector<unsigned int > > _neighborCount;
 	public:
 		Life(unsigned int rows, unsigned int columns) : 
 
@@ -379,7 +380,7 @@ class Life{
         }
 
 
-       /* void count_print(std::ostream& w = std::cout){
+        void count_print(std::ostream& w = std::cout){
             //prints the _neighborCount matrix
             for (int i = 0; i < _rows; i++){
                 for (int j = 0; j < _cols; j++){
@@ -389,7 +390,7 @@ class Life{
             }
             w<<endl;
         }
-*/
+
         void update_neighbor_count(int row, int col, char neighbor){
             //Given the coordinates of a live cell, updates the neighbor count
             //in the direction of "neighbor".
