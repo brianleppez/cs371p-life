@@ -22,6 +22,8 @@ class AbstractCell {
 		virtual void print(std::ostream& w) const = 0;
 
         virtual char set(std::istream& input) = 0;
+    
+        virtual void tryIncrementNC (bool angledNeighbor) { _neighborCount++; }
 
         int getNeighborCount () { return _neighborCount; }
 
@@ -225,6 +227,12 @@ class FredkinCell : public AbstractCell {
 			}
             return c;
         }
+    
+        void tryIncrementNC (bool angledNeighbor) {
+            if (!angledNeighbor) {
+                incrementNC();
+            }
+        }
         /*Neighbor spots defined by ints (X is current cell):
            2
           1 3
@@ -386,28 +394,28 @@ class Life{
             //Given the coordinates of a live cell, updates the neighbor count
             //in the direction of "neighbor".
             if (neighbor == '0') {
-                _board[row][col - 1].incrementNC();
+                _board[row][col - 1].tryIncrementNC(false);
             }
             else if (neighbor == '1') {
-                _board[row - 1][col - 1].incrementNC();
+                _board[row - 1][col - 1].tryIncrementNC(true);
             }
             else if (neighbor == '2') {
-                _board[row - 1][col].incrementNC();
+                _board[row - 1][col].tryIncrementNC(false);
             }
             else if (neighbor == '3') {
-                _board[row - 1][col + 1].incrementNC();
+                _board[row - 1][col + 1].tryIncrementNC(true);
             }
             else if (neighbor == '4') {
-                _board[row][col + 1].incrementNC();
+                _board[row][col + 1].tryIncrementNC(false);
             }
             else if (neighbor == '5') {
-                _board[row + 1][col + 1].incrementNC();
+                _board[row + 1][col + 1].tryIncrementNC(true);
             }
             else if (neighbor == '6') {
-                _board[row + 1][col].incrementNC();
+                _board[row + 1][col].tryIncrementNC(false);
             }
             else if (neighbor == '7') {
-                _board[row + 1][col - 1].incrementNC();
+                _board[row + 1][col - 1].tryIncrementNC(true);
             }
             
         }
