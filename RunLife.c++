@@ -9,9 +9,8 @@
 // --------
 
 #include <cassert>  // assert
-#include <iostream> // cout, endl
+#include <iostream> // cout, std::endl
 #include "Life.h"
-using namespace std;
 
 // ----
 // main
@@ -40,7 +39,7 @@ int main () {
     }
 
     {
-    cout << "*** Life<ConwayCell> 20x29 ***\n" << endl;
+    std::cout << "*** Life<ConwayCell> 20x29 ***\n" << std::endl;
     Life<ConwayCell> conway2(20, 29);
     conway2.life_read();
     //conway2.life_run(28, 4);
@@ -54,7 +53,7 @@ int main () {
     // Conway Cell 109x69
     // ------------------
     {
-    cout << "*** Life<ConwayCell> 109x69 ***\n" << endl;
+    std::cout << "*** Life<ConwayCell> 109x69 ***\n" << std::endl;
     Life<ConwayCell> conway3(109, 69);
     conway3.life_read();
     // conway3.life_run(9);
@@ -77,7 +76,7 @@ int main () {
     // Fredkin Cell 20x20
     // ------------------
 
-    cout << "*** Life<FredkinCell> 20x20 ***\n" << endl;
+    std::cout << "*** Life<FredkinCell> 20x20 ***\n" << std::endl;
     {
     Life<FredkinCell> fredkin1(20, 20);
     fredkin1.life_read();
@@ -92,7 +91,12 @@ int main () {
     // Cell 20x20
     // ----------
 
-    cout << "*** Life<Cell> 20x20 ***\n" << endl;
+    std::cout << "*** Life<Cell> 20x20 ***\n" << std::endl;
+    {
+    Life<Cell> cell1(20, 20);
+    cell1.life_read();
+    cell1.life_run(5);
+    }
     /*
     Simulate 5 evolutions.
     Print every grid (i.e. 0, 1, 2, ... 5)

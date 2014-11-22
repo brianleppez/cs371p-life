@@ -27,6 +27,14 @@ class AbstractCell {
     
         virtual void tryIncrementNC (bool angledNeighbor) { _neighborCount++; }
 
+        virtual int getAge() const = 0;
+
+        virtual string check_regulars() const = 0;
+
+        virtual string check_corners() const = 0;
+
+        virtual string check_edges() const = 0;
+
         int getNeighborCount () { return _neighborCount; }
 
         void incrementNC () { _neighborCount++; }
@@ -36,39 +44,43 @@ class AbstractCell {
 		// evolve = 0; foce conway and fredkin to define.
 };
 
-//Cell class
-//struct Cell : Handle<AbstractCell> {
-//    Cell (AbstractCell* p) : 
-//            Handle<AbstractCell> (p)
-//        {
-//            p = new FredkinCell();
-//        }
-//    void print(ostream& w) const {
-//        return get()->print(w);
-//    }
-//    char set(std::istream& input){
-//        return get()->set(input);
-//    }
-//    string check_regulars() const {
-//        return get()->check_regulars();
-//    }
-//    string check_corners() const {
-//        return get()->check_corners();
-//    }
-//    string check_edges() const {
-//        return get()->check_edges();
-//    }
-//    int kill_revive() {
-//        return get()->kill_revive();
-//    }
-//    void change_types() {
-//        Cell c = new ConwayCell();
-//        swap(c);
-//    }
-//
-//    void evolve(){
-//        p = new ConwayCell();
-//    }
+struct Cell : Handle<AbstractCell> {
+    Cell (AbstractCell* p) : 
+           Handle<AbstractCell> (p)
+       {
+           p = new FredkinCell();
+       }
+    void print(ostream& w) const {
+       return get()->print(w);
+    }
+    char set(std::istream& input){
+       return get()->set(input);
+    }
+    string check_regulars() const {
+       return get()->check_regulars();
+    }
+    string check_corners() const {
+       return get()->check_corners();
+    }
+    string check_edges() const {
+       return get()->check_edges();
+    }
+    void change_types() {
+       Cell c = new ConwayCell();
+       swap(c);
+    }
+
+    void tryIncrementNC(bool angledNeighbor) { get()->tryIncrementNC(angledNeighbor);}
+
+    int kill_revive() {
+        int v = get()->kill_revive();
+        if(v == 0) {
+            if(get()->getAge() == 2){
+                change_types();
+            }
+        }
+        return v;
+    }
 
 
 //ConwayCell class
@@ -234,6 +246,10 @@ class FredkinCell : public AbstractCell {
             if (!angledNeighbor) {
                 incrementNC();
             }
+        }
+
+        int getAge () {
+            return _age;
         }
         /*Neighbor spots defined by ints (X is current cell):
            2
