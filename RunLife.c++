@@ -102,4 +102,5 @@ int main () {
     Print every grid (i.e. 0, 1, 2, ... 5)
     */
 
-    return 0;}
+    return 0;
+}

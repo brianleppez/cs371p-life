@@ -7,7 +7,6 @@
 #include <sstream>
 #include <limits>
 
-#include "Handle.h"
 
 using namespace std;
 
@@ -23,17 +22,21 @@ class AbstractCell {
 
 		virtual void print(std::ostream& w) const = 0;
 
-        virtual char set(std::istream& input) = 0;
+        virtual char set(std::istream& input) {}
     
         virtual void tryIncrementNC (bool angledNeighbor) { _neighborCount++; }
 
-        virtual int getAge() const = 0;
+        virtual int getAge() const {}
 
-        virtual string check_regulars() const = 0;
+        virtual string check_regulars() const {}
 
-        virtual string check_corners() const = 0;
+        virtual string check_corners(int i) const {}
 
-        virtual string check_edges() const = 0;
+        virtual string check_edges(int i) const {}
+
+        virtual AbstractCell* clone() const {}
+
+        virtual int kill_revive() {}
 
         int getNeighborCount () { return _neighborCount; }
 
@@ -44,50 +47,11 @@ class AbstractCell {
 		// evolve = 0; foce conway and fredkin to define.
 };
 
-struct Cell : Handle<AbstractCell> {
-    Cell (AbstractCell* p) : 
-           Handle<AbstractCell> (p)
-       {
-           p = new FredkinCell();
-       }
-    void print(ostream& w) const {
-       return get()->print(w);
-    }
-    char set(std::istream& input){
-       return get()->set(input);
-    }
-    string check_regulars() const {
-       return get()->check_regulars();
-    }
-    string check_corners() const {
-       return get()->check_corners();
-    }
-    string check_edges() const {
-       return get()->check_edges();
-    }
-    void change_types() {
-       Cell c = new ConwayCell();
-       swap(c);
-    }
-
-    void tryIncrementNC(bool angledNeighbor) { get()->tryIncrementNC(angledNeighbor);}
-
-    int kill_revive() {
-        int v = get()->kill_revive();
-        if(v == 0) {
-            if(get()->getAge() == 2){
-                change_types();
-            }
-        }
-        return v;
-    }
-
 
 //ConwayCell class
 class ConwayCell : public AbstractCell {
 	
 	public:
-		ConwayCell() {}
 		void print(ostream& w) const {
 			if(_dead){
 				w<<".";
@@ -185,6 +149,10 @@ class ConwayCell : public AbstractCell {
             }
         }
 
+        AbstractCell* clone() const{
+            return new ConwayCell(*this);
+        }
+
         int kill_revive() {
             int v = 0;
             if (_dead) {
@@ -203,6 +171,7 @@ class ConwayCell : public AbstractCell {
             return v;
         }
 };
+
 
 //FredkinCell class
 class FredkinCell : public AbstractCell {
@@ -322,6 +291,11 @@ class FredkinCell : public AbstractCell {
             }
         }
 
+        AbstractCell* clone() const{
+            return new FredkinCell(*this);
+        }
+
+
         int kill_revive() {
             int v = 0;
             if (_dead) {
@@ -343,6 +317,52 @@ class FredkinCell : public AbstractCell {
             resetNC();
             return v;
         }
+};
+
+
+
+
+class Cell{
+    public:
+        AbstractCell* _p;
+
+        Cell (AbstractCell* p = new FredkinCell()) : _p (p){}
+        Cell (const Cell& other) : _p (other._p->clone()){}
+        ~Cell(){ delete _p;}
+        Cell& operator = (const Cell& other) {
+            if (this != &other){
+                delete _p;
+                _p = other._p->clone();
+            }
+            return *this;
+        }
+        void print(ostream& w) const {
+           return _p->print(w);
+        }
+        char set(std::istream& input){
+           return _p->set(input);
+        }
+        string check_regulars() const {
+           return _p->check_regulars();
+        }
+        string check_corners(int i) const {
+           return _p->check_corners(i);
+        }
+        string check_edges(int i) const {
+           return _p->check_edges(i);
+        }
+
+    void tryIncrementNC(bool angledNeighbor) { _p->tryIncrementNC(angledNeighbor);}
+
+    int kill_revive() {
+        int v = _p->kill_revive();
+        if(v == 0) {
+            if(_p->getAge() == 2){
+                *this = new ConwayCell();
+            }
+        }
+        return v;
+    }
 };
 
 //Life class
