@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <sstream>
 #include <limits>
+#include <utility>
 
 
 using namespace std;
@@ -20,13 +21,15 @@ class AbstractCell {
 		// Default constructor given for free.
         AbstractCell() : _dead(true), _neighborCount(0){}
 
+        AbstractCell(bool b) : _dead(b){}
+
 		virtual void print(std::ostream& w) const = 0;
 
         virtual char set(std::istream& input) {}
     
         virtual void tryIncrementNC (bool angledNeighbor) { _neighborCount++; }
 
-        virtual int getAge() const {}
+        virtual unsigned int getAge() const {}
 
         virtual string check_regulars() const {}
 
@@ -36,7 +39,7 @@ class AbstractCell {
 
         virtual AbstractCell* clone() const {}
 
-        virtual int kill_revive() {}
+        virtual std::pair<int, AbstractCell*> kill_revive (bool abstract) {}
 
         int getNeighborCount () { return _neighborCount; }
 
@@ -50,8 +53,8 @@ class AbstractCell {
 
 //ConwayCell class
 class ConwayCell : public AbstractCell {
-	
 	public:
+        ConwayCell(bool b = true) : AbstractCell(b) {}
 		void print(ostream& w) const {
 			if(_dead){
 				w<<".";
@@ -153,8 +156,9 @@ class ConwayCell : public AbstractCell {
             return new ConwayCell(*this);
         }
 
-        int kill_revive() {
+        std::pair<int, AbstractCell*> kill_revive(bool abstract) {
             int v = 0;
+            AbstractCell* a = 0;
             if (_dead) {
                 if (getNeighborCount() == 3) {
                     _dead = false;
@@ -168,7 +172,7 @@ class ConwayCell : public AbstractCell {
                 }
             }
             resetNC();
-            return v;
+            return make_pair(v, a);
         }
 };
 
@@ -178,7 +182,7 @@ class FredkinCell : public AbstractCell {
 	private:
 		unsigned int _age;
 	public:
-		void print(ostream& w) const{
+		void print(ostream& w) const {
 			if(_dead){
 				w << "-";
 			}
@@ -189,7 +193,7 @@ class FredkinCell : public AbstractCell {
 				w << _age;
 			}
 		}
-		char set(std::istream& input){
+		char set(std::istream& input) {
 			char c;
 			input >> c;
 			if (c == '-'){
@@ -217,7 +221,7 @@ class FredkinCell : public AbstractCell {
             }
         }
 
-        int getAge () {
+        unsigned int getAge () {
             return _age;
         }
         /*Neighbor spots defined by ints (X is current cell):
@@ -296,8 +300,9 @@ class FredkinCell : public AbstractCell {
         }
 
 
-        int kill_revive() {
+        pair<int, AbstractCell*> kill_revive(bool abstract) {
             int v = 0;
+            AbstractCell* q = 0;
             if (_dead) {
                 if (getNeighborCount() == 3 || getNeighborCount() == 1) {
                     _dead = false;
@@ -312,15 +317,15 @@ class FredkinCell : public AbstractCell {
                 }
                 else {
                     _age++;
+                    if(abstract && _age == 2) {
+                        q = new ConwayCell(false);
+                    }
                 }
             }
             resetNC();
-            return v;
+            return make_pair(v, q);
         }
 };
-
-
-
 
 class Cell{
     public:
@@ -354,15 +359,16 @@ class Cell{
 
     void tryIncrementNC(bool angledNeighbor) { _p->tryIncrementNC(angledNeighbor);}
 
-    int kill_revive() {
-        int v = _p->kill_revive();
-        if(v == 0) {
-            if(_p->getAge() == 2){
-                *this = new ConwayCell();
+    pair<int, AbstractCell*> kill_revive (bool b) {
+        pair <int, AbstractCell*> pair = _p->kill_revive(true);
+        if(pair.second != 0) {
+                AbstractCell* q = pair.second;
+                _p = q;
+                pair.second = 0;
             }
+
+        return pair;
         }
-        return v;
-    }
 };
 
 //Life class
@@ -532,7 +538,9 @@ class Life{
         void life_kill_revive() {
             for (unsigned i = 0; i < _rows; ++i) {
                 for (unsigned j = 0; j < _cols; ++j) {
-                    _population += _board[i][j].kill_revive();
+                    pair <int, AbstractCell*> p = _board[i][j].kill_revive(false);
+                    _population += p.first;
+
 
                 }
             }
