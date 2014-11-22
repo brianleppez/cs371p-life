@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <sstream>
+#include <limits>
 
 #include "Handle.h"
 
@@ -18,6 +19,7 @@ class AbstractCell {
 		int _neighborCount;
 	public:
 		// Default constructor given for free.
+        AbstractCell() : _dead(true), _neighborCount(0){}
 
 		virtual void print(std::ostream& w) const = 0;
 
@@ -96,7 +98,6 @@ class ConwayCell : public AbstractCell {
 				cout<<"Bad input for ConwayCell";
 				assert(false);
             }
-            resetNC();
             return c;
         }
         /*Neighbor spots defined by ints (X is current cell):
@@ -226,7 +227,6 @@ class FredkinCell : public AbstractCell {
 				cout<<"Bad input for FredkinCell";
 				assert(false);
 			}
-            resetNC();
             return c;
         }
     
