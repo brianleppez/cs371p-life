@@ -59,11 +59,11 @@ public:
         return c;
     }
     /*Neighbor spots defined by ints (X is current cell):
-     2
-     1 3
+       2
+      1 3
      0 X 4
-     7 5
-     6
+      7 5
+       6
      */
     string check_regulars() const {
         if (_dead) {
@@ -102,9 +102,9 @@ public:
     }
     string check_edges(int i) const {
         /*Edge spot defined by ints
-         1
+          1
          0 2
-         3
+          3
          */
         if (_dead) {
             return "";
@@ -198,11 +198,11 @@ public:
         return _age;
     }
     /*Neighbor spots defined by ints (X is current cell):
-     2
-     1 3
+       2
+      1 3
      0 X 4
-     7 5
-     6
+      7 5
+       6
      */
     string check_regulars() const{
         if (_dead) {
@@ -241,9 +241,9 @@ public:
     }
     string check_edges(int i) const{
         /*Edge spot defined by ints
-         1
+          1
          0 2
-         3
+          3
          */
         if (_dead) {
             return "";
@@ -311,11 +311,11 @@ public:
         return _p->set(input);
     }
     /*Neighbor spots defined by ints (X is current cell):
-      2
-      1 3
+        2
+       1 3
       0 X 4
-      7 5
-      6
+       7 5
+        6
       */
     string check_regulars() const {
         if (_p->isDead()) {
@@ -354,9 +354,9 @@ public:
     }
     string check_edges(int i) const {
         /*Edge spot defined by ints
-         1
+          1
          0 2
-         3
+          3
          */
         if (_p->isDead()) {
             return "";
@@ -432,16 +432,6 @@ public:
         for (unsigned int i = 0; i < _rows; i++){
             for (unsigned int j = 0; j < _cols; j++){
                 _board[i][j].print(w);
-            }
-            w<<endl;
-        }
-        w<<endl;
-    }
-    void count_print(std::ostream& w = std::cout){
-        //prints the _neighborCount matrix
-        for (int i = 0; i < _rows; i++){
-            for (int j = 0; j < _cols; j++){
-                w<< _board[i][j].getNeighborCount();
             }
             w<<endl;
         }
