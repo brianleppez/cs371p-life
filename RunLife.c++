@@ -23,10 +23,10 @@ int main () {
     // Conway Cell 21x13
     // -----------------
     {
-    // cout << "*** Life<ConwayCell> 21x13 ***\n" << endl;
+    cout << "*** Life<ConwayCell> 21x13 ***\n" << endl;
     Life<ConwayCell> conway1(21, 13);
     conway1.life_read();
-    // conway1.life_run(12);
+    conway1.life_run(12);
 
     /*
     Simulate 12 evolutions.
@@ -42,7 +42,7 @@ int main () {
     std::cout << "*** Life<ConwayCell> 20x29 ***\n" << std::endl;
     Life<ConwayCell> conway2(20, 29);
     conway2.life_read();
-    //conway2.life_run(28, 4);
+    conway2.life_run(28, 4);
     }
     /*
     Simulate 28 evolutions.
@@ -56,11 +56,10 @@ int main () {
     std::cout << "*** Life<ConwayCell> 109x69 ***\n" << std::endl;
     Life<ConwayCell> conway3(109, 69);
     conway3.life_read();
-    // conway3.life_run(9);
-    // conway3.life_run(274, 274);
-
-    // conway3.life_run(40, 40);
-    // conway3.life_run(2177, 2177);
+    conway3.life_run(9);
+    conway3.life_run(274, 274);
+    conway3.life_run(40, 40);
+    conway3.life_run(2177, 2177);
     }
     /*
     Simulate 283 evolutions.
