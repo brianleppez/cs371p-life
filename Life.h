@@ -57,10 +57,10 @@ class ConwayCell : public AbstractCell {
         ConwayCell(bool b = true) : AbstractCell(b) {}
 		void print(ostream& w) const {
 			if(_dead){
-				w<<".";
+				w << ".";
 			}
 			else{
-				w<<"*";
+				w << "*";
 			}
 			
 		}
@@ -166,8 +166,11 @@ class ConwayCell : public AbstractCell {
                 }
             }
             else {
+                cout << "Neighbor Count for Conway: " << getNeighborCount() << endl;
                 if (getNeighborCount() != 2 && getNeighborCount() != 3) {
+                    cout << "I'm going to be dead" << endl;
                     _dead = true;
+                    cout << "I am " << _dead << endl;
                     v = -1;
                 }
             }
@@ -299,7 +302,6 @@ class FredkinCell : public AbstractCell {
             return new FredkinCell(*this);
         }
 
-
         pair<int, AbstractCell*> kill_revive(bool abstract) {
             int v = 0;
             AbstractCell* q = 0;
@@ -319,6 +321,7 @@ class FredkinCell : public AbstractCell {
                     _age++;
                     if(abstract && _age == 2) {
                         q = new ConwayCell(false);
+
                     }
                 }
             }
