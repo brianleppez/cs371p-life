@@ -1,0 +1,636 @@
+==9603== Memcheck, a memory error detector
+==9603== Copyright (C) 2002-2011, and GNU GPL'd, by Julian Seward et al.
+==9603== Using Valgrind-3.7.0 and LibVEX; rerun with -h for copyright info
+==9603== Command: TestLife
+==9603== 
+Running main() from gtest_main.cc
+[==========] Running 138 tests from 5 test cases.
+[----------] Global test environment set-up.
+[----------] 26 tests from AbstractCell
+[ RUN      ] AbstractCell.Constructor
+[       OK ] AbstractCell.Constructor (13 ms)
+[ RUN      ] AbstractCell.Constructor1
+[       OK ] AbstractCell.Constructor1 (3 ms)
+[ RUN      ] AbstractCell.Constructor2
+[       OK ] AbstractCell.Constructor2 (4 ms)
+[ RUN      ] AbstractCell.Print
+[       OK ] AbstractCell.Print (12 ms)
+[ RUN      ] AbstractCell.Print1
+[       OK ] AbstractCell.Print1 (3 ms)
+[ RUN      ] AbstractCell.Print2
+[       OK ] AbstractCell.Print2 (3 ms)
+[ RUN      ] AbstractCell.Set
+[       OK ] AbstractCell.Set (3 ms)
+[ RUN      ] AbstractCell.Set1
+[       OK ] AbstractCell.Set1 (4 ms)
+[ RUN      ] AbstractCell.Set2
+[       OK ] AbstractCell.Set2 (3 ms)
+[ RUN      ] AbstractCell.TryIncrement
+[       OK ] AbstractCell.TryIncrement (3 ms)
+[ RUN      ] AbstractCell.TryIncrement1
+[       OK ] AbstractCell.TryIncrement1 (3 ms)
+[ RUN      ] AbstractCell.TryIncrement2
+[       OK ] AbstractCell.TryIncrement2 (3 ms)
+[ RUN      ] AbstractCell.TryIncrement3
+[       OK ] AbstractCell.TryIncrement3 (2 ms)
+[ RUN      ] AbstractCell.TryIncrement4
+[       OK ] AbstractCell.TryIncrement4 (3 ms)
+[ RUN      ] AbstractCell.TryIncrement5
+[       OK ] AbstractCell.TryIncrement5 (3 ms)
+[ RUN      ] AbstractCell.TryIncrement6
+[       OK ] AbstractCell.TryIncrement6 (3 ms)
+[ RUN      ] AbstractCell.TryIncrement7
+[       OK ] AbstractCell.TryIncrement7 (3 ms)
+[ RUN      ] AbstractCell.GetAge
+[       OK ] AbstractCell.GetAge (2 ms)
+[ RUN      ] AbstractCell.GetAge1
+[       OK ] AbstractCell.GetAge1 (3 ms)
+[ RUN      ] AbstractCell.GetAge2
+[       OK ] AbstractCell.GetAge2 (3 ms)
+[ RUN      ] AbstractCell.IsDead
+[       OK ] AbstractCell.IsDead (3 ms)
+[ RUN      ] AbstractCell.IsDead1
+[       OK ] AbstractCell.IsDead1 (2 ms)
+[ RUN      ] AbstractCell.IsDead2
+[       OK ] AbstractCell.IsDead2 (3 ms)
+[ RUN      ] AbstractCell.GetNeighborCount
+[       OK ] AbstractCell.GetNeighborCount (3 ms)
+[ RUN      ] AbstractCell.GetNeighborCount1
+[       OK ] AbstractCell.GetNeighborCount1 (3 ms)
+[ RUN      ] AbstractCell.GetNeighborCount2
+[       OK ] AbstractCell.GetNeighborCount2 (2 ms)
+[----------] 26 tests from AbstractCell (110 ms total)
+
+[----------] 26 tests from ConwayCell
+[ RUN      ] ConwayCell.Print
+[       OK ] ConwayCell.Print (2 ms)
+[ RUN      ] ConwayCell.Print1
+[       OK ] ConwayCell.Print1 (4 ms)
+[ RUN      ] ConwayCell.Print2
+[       OK ] ConwayCell.Print2 (3 ms)
+[ RUN      ] ConwayCell.Set
+[       OK ] ConwayCell.Set (3 ms)
+[ RUN      ] ConwayCell.Set2
+[       OK ] ConwayCell.Set2 (3 ms)
+[ RUN      ] ConwayCell.Set3
+[       OK ] ConwayCell.Set3 (3 ms)
+[ RUN      ] ConwayCell.Set4
+[       OK ] ConwayCell.Set4 (3 ms)
+[ RUN      ] ConwayCell.CheckRegulars
+[       OK ] ConwayCell.CheckRegulars (4 ms)
+[ RUN      ] ConwayCell.CheckRegulars1
+[       OK ] ConwayCell.CheckRegulars1 (4 ms)
+[ RUN      ] ConwayCell.CheckRegulars2
+[       OK ] ConwayCell.CheckRegulars2 (2 ms)
+[ RUN      ] ConwayCell.CheckCorners
+[       OK ] ConwayCell.CheckCorners (4 ms)
+[ RUN      ] ConwayCell.CheckCorners1
+[       OK ] ConwayCell.CheckCorners1 (3 ms)
+[ RUN      ] ConwayCell.CheckCorners2
+[       OK ] ConwayCell.CheckCorners2 (2 ms)
+[ RUN      ] ConwayCell.CheckCorners3
+[       OK ] ConwayCell.CheckCorners3 (3 ms)
+[ RUN      ] ConwayCell.CheckCorners4
+[       OK ] ConwayCell.CheckCorners4 (3 ms)
+[ RUN      ] ConwayCell.CheckCorners5
+[       OK ] ConwayCell.CheckCorners5 (4 ms)
+[ RUN      ] ConwayCell.CheckEdges
+[       OK ] ConwayCell.CheckEdges (4 ms)
+[ RUN      ] ConwayCell.CheckEdges1
+[       OK ] ConwayCell.CheckEdges1 (3 ms)
+[ RUN      ] ConwayCell.CheckEdges2
+[       OK ] ConwayCell.CheckEdges2 (3 ms)
+[ RUN      ] ConwayCell.CheckEdges3
+[       OK ] ConwayCell.CheckEdges3 (3 ms)
+[ RUN      ] ConwayCell.CheckEdges4
+[       OK ] ConwayCell.CheckEdges4 (3 ms)
+[ RUN      ] ConwayCell.CheckEdges5
+[       OK ] ConwayCell.CheckEdges5 (3 ms)
+[ RUN      ] ConwayCell.KillRevive
+[       OK ] ConwayCell.KillRevive (3 ms)
+[ RUN      ] ConwayCell.KillRevive1
+[       OK ] ConwayCell.KillRevive1 (4 ms)
+[ RUN      ] ConwayCell.KillRevive2
+[       OK ] ConwayCell.KillRevive2 (5 ms)
+[ RUN      ] ConwayCell.KillRevive3
+[       OK ] ConwayCell.KillRevive3 (4 ms)
+[----------] 26 tests from ConwayCell (89 ms total)
+
+[----------] 34 tests from FredkinCell
+[ RUN      ] FredkinCell.Print
+[       OK ] FredkinCell.Print (3 ms)
+[ RUN      ] FredkinCell.Print1
+[       OK ] FredkinCell.Print1 (3 ms)
+[ RUN      ] FredkinCell.Print2
+[       OK ] FredkinCell.Print2 (3 ms)
+[ RUN      ] FredkinCell.Set
+[       OK ] FredkinCell.Set (4 ms)
+[ RUN      ] FredkinCell.Set2
+[       OK ] FredkinCell.Set2 (3 ms)
+[ RUN      ] FredkinCell.Set3
+[       OK ] FredkinCell.Set3 (3 ms)
+[ RUN      ] FredkinCell.Set4
+[       OK ] FredkinCell.Set4 (2 ms)
+[ RUN      ] FredkinCell.TryIncrement
+[       OK ] FredkinCell.TryIncrement (2 ms)
+[ RUN      ] FredkinCell.TryIncrement2
+[       OK ] FredkinCell.TryIncrement2 (2 ms)
+[ RUN      ] FredkinCell.TryIncrement3
+[       OK ] FredkinCell.TryIncrement3 (2 ms)
+[ RUN      ] FredkinCell.TryIncrement4
+[       OK ] FredkinCell.TryIncrement4 (3 ms)
+[ RUN      ] FredkinCell.GetAge
+[       OK ] FredkinCell.GetAge (3 ms)
+[ RUN      ] FredkinCell.GetAge2
+[       OK ] FredkinCell.GetAge2 (3 ms)
+[ RUN      ] FredkinCell.GetAge3
+[       OK ] FredkinCell.GetAge3 (3 ms)
+[ RUN      ] FredkinCell.CheckRegulars
+[       OK ] FredkinCell.CheckRegulars (4 ms)
+[ RUN      ] FredkinCell.CheckRegulars1
+[       OK ] FredkinCell.CheckRegulars1 (3 ms)
+[ RUN      ] FredkinCell.CheckRegulars2
+[       OK ] FredkinCell.CheckRegulars2 (3 ms)
+[ RUN      ] FredkinCell.CheckCorners
+[       OK ] FredkinCell.CheckCorners (4 ms)
+[ RUN      ] FredkinCell.CheckCorners1
+[       OK ] FredkinCell.CheckCorners1 (3 ms)
+[ RUN      ] FredkinCell.CheckCorners2
+[       OK ] FredkinCell.CheckCorners2 (2 ms)
+[ RUN      ] FredkinCell.CheckCorners3
+[       OK ] FredkinCell.CheckCorners3 (3 ms)
+[ RUN      ] FredkinCell.CheckCorners4
+[       OK ] FredkinCell.CheckCorners4 (4 ms)
+[ RUN      ] FredkinCell.CheckCorners5
+[       OK ] FredkinCell.CheckCorners5 (3 ms)
+[ RUN      ] FredkinCell.CheckEdges
+[       OK ] FredkinCell.CheckEdges (4 ms)
+[ RUN      ] FredkinCell.CheckEdges1
+[       OK ] FredkinCell.CheckEdges1 (3 ms)
+[ RUN      ] FredkinCell.CheckEdges2
+[       OK ] FredkinCell.CheckEdges2 (2 ms)
+[ RUN      ] FredkinCell.CheckEdges3
+[       OK ] FredkinCell.CheckEdges3 (3 ms)
+[ RUN      ] FredkinCell.CheckEdges4
+[       OK ] FredkinCell.CheckEdges4 (3 ms)
+[ RUN      ] FredkinCell.CheckEdges5
+[       OK ] FredkinCell.CheckEdges5 (3 ms)
+[ RUN      ] FredkinCell.KillRevive
+[       OK ] FredkinCell.KillRevive (3 ms)
+[ RUN      ] FredkinCell.KillRevive1
+[       OK ] FredkinCell.KillRevive1 (4 ms)
+[ RUN      ] FredkinCell.KillRevive2
+[       OK ] FredkinCell.KillRevive2 (3 ms)
+[ RUN      ] FredkinCell.KillRevive3
+[       OK ] FredkinCell.KillRevive3 (4 ms)
+[ RUN      ] FredkinCell.KillRevive4
+[       OK ] FredkinCell.KillRevive4 (5 ms)
+[----------] 34 tests from FredkinCell (112 ms total)
+
+[----------] 33 tests from Cell
+[ RUN      ] Cell.Print
+[       OK ] Cell.Print (2 ms)
+[ RUN      ] Cell.Print1
+[       OK ] Cell.Print1 (3 ms)
+[ RUN      ] Cell.Print2
+[       OK ] Cell.Print2 (3 ms)
+[ RUN      ] Cell.Set
+[       OK ] Cell.Set (4 ms)
+[ RUN      ] Cell.Set2
+[       OK ] Cell.Set2 (4 ms)
+[ RUN      ] Cell.Set3
+[       OK ] Cell.Set3 (3 ms)
+[ RUN      ] Cell.Set4
+[       OK ] Cell.Set4 (3 ms)
+[ RUN      ] Cell.CheckRegulars
+[       OK ] Cell.CheckRegulars (3 ms)
+[ RUN      ] Cell.CheckRegulars1
+[       OK ] Cell.CheckRegulars1 (3 ms)
+[ RUN      ] Cell.CheckRegulars2
+[       OK ] Cell.CheckRegulars2 (3 ms)
+[ RUN      ] Cell.CheckCorners
+[       OK ] Cell.CheckCorners (4 ms)
+[ RUN      ] Cell.CheckCorners1
+[       OK ] Cell.CheckCorners1 (3 ms)
+[ RUN      ] Cell.CheckCorners2
+[       OK ] Cell.CheckCorners2 (3 ms)
+[ RUN      ] Cell.CheckCorners3
+[       OK ] Cell.CheckCorners3 (4 ms)
+[ RUN      ] Cell.CheckCorners4
+[       OK ] Cell.CheckCorners4 (4 ms)
+[ RUN      ] Cell.CheckCorners5
+[       OK ] Cell.CheckCorners5 (3 ms)
+[ RUN      ] Cell.CheckEdges
+[       OK ] Cell.CheckEdges (4 ms)
+[ RUN      ] Cell.CheckEdges1
+[       OK ] Cell.CheckEdges1 (3 ms)
+[ RUN      ] Cell.CheckEdges2
+[       OK ] Cell.CheckEdges2 (3 ms)
+[ RUN      ] Cell.CheckEdges3
+[       OK ] Cell.CheckEdges3 (4 ms)
+[ RUN      ] Cell.CheckEdges4
+[       OK ] Cell.CheckEdges4 (3 ms)
+[ RUN      ] Cell.CheckEdges5
+[       OK ] Cell.CheckEdges5 (3 ms)
+[ RUN      ] Cell.TryIncrement
+[       OK ] Cell.TryIncrement (3 ms)
+[ RUN      ] Cell.TryIncrement2
+[       OK ] Cell.TryIncrement2 (3 ms)
+[ RUN      ] Cell.TryIncrement3
+[       OK ] Cell.TryIncrement3 (3 ms)
+[ RUN      ] Cell.KillRevive
+[       OK ] Cell.KillRevive (3 ms)
+[ RUN      ] Cell.KillRevive1
+[       OK ] Cell.KillRevive1 (4 ms)
+[ RUN      ] Cell.KillRevive2
+[       OK ] Cell.KillRevive2 (3 ms)
+[ RUN      ] Cell.KillRevive3
+[       OK ] Cell.KillRevive3 (12 ms)
+[ RUN      ] Cell.getNeighborCount
+[       OK ] Cell.getNeighborCount (2 ms)
+[ RUN      ] Cell.getNeighborCount1
+[       OK ] Cell.getNeighborCount1 (3 ms)
+[ RUN      ] Cell.getNeighborCount2
+[       OK ] Cell.getNeighborCount2 (3 ms)
+[ RUN      ] Cell.getNeighborCount3
+[       OK ] Cell.getNeighborCount3 (4 ms)
+[----------] 33 tests from Cell (124 ms total)
+
+[----------] 19 tests from Life
+[ RUN      ] Life.LifeSet
+[       OK ] Life.LifeSet (31 ms)
+[ RUN      ] Life.LifeSet1
+[       OK ] Life.LifeSet1 (28 ms)
+[ RUN      ] Life.LifeSet2
+[       OK ] Life.LifeSet2 (30 ms)
+[ RUN      ] Life.LifeRead
+[       OK ] Life.LifeRead (7 ms)
+[ RUN      ] Life.LifeRead1
+[       OK ] Life.LifeRead1 (4 ms)
+[ RUN      ] Life.LifeRead2
+[       OK ] Life.LifeRead2 (4 ms)
+[ RUN      ] Life.UpdateNeighborCount
+[       OK ] Life.UpdateNeighborCount (7 ms)
+[ RUN      ] Life.UpdateNeighborCount1
+[       OK ] Life.UpdateNeighborCount1 (7 ms)
+[ RUN      ] Life.UpdateNeighborCount2
+[       OK ] Life.UpdateNeighborCount2 (7 ms)
+[ RUN      ] Life.UpdateCounts
+[       OK ] Life.UpdateCounts (16 ms)
+[ RUN      ] Life.UpdateCounts1
+[       OK ] Life.UpdateCounts1 (4 ms)
+[ RUN      ] Life.UpdateCounts2
+[       OK ] Life.UpdateCounts2 (14 ms)
+[ RUN      ] Life.LifeKillRevive
+[       OK ] Life.LifeKillRevive (4 ms)
+[ RUN      ] Life.LifeKillRevive1
+[       OK ] Life.LifeKillRevive1 (4 ms)
+[ RUN      ] Life.LifeKillRevive2
+[       OK ] Life.LifeKillRevive2 (4 ms)
+[ RUN      ] Life.LifeKillRevive3
+[       OK ] Life.LifeKillRevive3 (4 ms)
+[ RUN      ] Life.LifeKillRevive4
+[       OK ] Life.LifeKillRevive4 (4 ms)
+[ RUN      ] Life.LifeKillRevive5
+[       OK ] Life.LifeKillRevive5 (3 ms)
+[ RUN      ] Life.LifeKillRevive6
+[       OK ] Life.LifeKillRevive6 (4 ms)
+[----------] 19 tests from Life (190 ms total)
+
+[----------] Global test environment tear-down
+[==========] 138 tests from 5 test cases ran. (654 ms total)
+[  PASSED  ] 138 tests.
+==9603== 
+==9603== HEAP SUMMARY:
+==9603==     in use at exit: 0 bytes in 0 blocks
+==9603==   total heap usage: 5,429 allocs, 5,429 frees, 388,502 bytes allocated
+==9603== 
+==9603== All heap blocks were freed -- no leaks are possible
+==9603== 
+==9603== For counts of detected and suppressed errors, rerun with: -v
+==9603== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)
+File 'Life.c++'
+Lines executed:99.25% of 134
+Branches executed:100.00% of 224
+Taken at least once:71.88% of 224
+Calls executed:63.68% of 234
+Creating 'Life.c++.gcov'
+
+File '/usr/include/c++/4.7/iostream'
+Lines executed:100.00% of 1
+No branches
+Calls executed:100.00% of 2
+Creating 'iostream.gcov'
+
+File 'Life.h'
+Lines executed:100.00% of 4
+Branches executed:100.00% of 6
+Taken at least once:50.00% of 6
+Calls executed:64.29% of 14
+Creating 'Life.h.gcov'
+
+File '/usr/include/c++/4.7/bits/basic_ios.h'
+No executable lines
+No branches
+No calls
+Removing 'basic_ios.h.gcov'
+
+File '/usr/include/c++/4.7/ext/new_allocator.h'
+Lines executed:0.00% of 2
+No branches
+No calls
+Creating 'new_allocator.h.gcov'
+
+File '/usr/include/c++/4.7/ostream'
+No executable lines
+No branches
+No calls
+Removing 'ostream.gcov'
+
+File '/usr/include/c++/4.7/bits/allocator.h'
+No executable lines
+No branches
+No calls
+Removing 'allocator.h.gcov'
+
+File '/usr/include/c++/4.7/bits/ios_base.h'
+Lines executed:0.00% of 2
+No branches
+No calls
+Creating 'ios_base.h.gcov'
+
+File '/usr/include/c++/4.7/bits/char_traits.h'
+Lines executed:0.00% of 2
+No branches
+No calls
+Creating 'char_traits.h.gcov'
+
+File 'TestLife.c++'
+Lines executed:100.00% of 891
+Branches executed:70.10% of 5980
+Taken at least once:35.05% of 5980
+Calls executed:58.86% of 5258
+Creating 'TestLife.c++.gcov'
+
+File '/usr/include/gtest/internal/gtest-port.h'
+Lines executed:23.53% of 17
+Branches executed:7.14% of 28
+Taken at least once:3.57% of 28
+Calls executed:3.85% of 26
+Creating 'gtest-port.h.gcov'
+
+File '/usr/include/gtest/internal/gtest-param-util.h'
+Lines executed:0.00% of 29
+Branches executed:0.00% of 34
+Taken at least once:0.00% of 34
+Calls executed:0.00% of 60
+Creating 'gtest-param-util.h.gcov'
+
+File '/usr/include/c++/4.7/bits/stl_bvector.h'
+Lines executed:0.00% of 32
+Branches executed:0.00% of 10
+Taken at least once:0.00% of 10
+Calls executed:0.00% of 14
+Creating 'stl_bvector.h.gcov'
+
+File '/usr/include/gtest/internal/gtest-internal.h'
+Lines executed:66.67% of 6
+Branches executed:100.00% of 554
+Taken at least once:50.00% of 554
+Calls executed:66.45% of 1246
+Creating 'gtest-internal.h.gcov'
+
+File 'Life.h'
+Lines executed:85.42% of 96
+Branches executed:81.58% of 304
+Taken at least once:59.54% of 304
+Calls executed:61.84% of 359
+Creating 'Life.h.gcov'
+
+File '/usr/include/c++/4.7/iostream'
+Lines executed:100.00% of 1
+No branches
+Calls executed:100.00% of 2
+Creating 'iostream.gcov'
+
+File '/usr/include/c++/4.7/bits/stl_iterator.h'
+Lines executed:100.00% of 10
+No branches
+Calls executed:100.00% of 6
+Creating 'stl_iterator.h.gcov'
+
+File '/usr/include/c++/4.7/bits/stl_construct.h'
+Lines executed:100.00% of 14
+Branches executed:100.00% of 46
+Taken at least once:63.04% of 46
+Calls executed:80.00% of 70
+Creating 'stl_construct.h.gcov'
+
+File '/usr/include/c++/4.7/bits/move.h'
+Lines executed:100.00% of 4
+No branches
+No calls
+Creating 'move.h.gcov'
+
+File '/usr/include/c++/4.7/bits/stl_uninitialized.h'
+Lines executed:76.32% of 38
+Branches executed:67.86% of 56
+Taken at least once:50.00% of 56
+Calls executed:50.00% of 90
+Creating 'stl_uninitialized.h.gcov'
+
+File '/usr/include/c++/4.7/ext/new_allocator.h'
+Lines executed:90.91% of 11
+Branches executed:100.00% of 12
+Taken at least once:50.00% of 12
+Calls executed:72.00% of 25
+Creating 'new_allocator.h.gcov'
+
+File '/usr/include/c++/4.7/bits/alloc_traits.h'
+Lines executed:100.00% of 4
+No branches
+Calls executed:100.00% of 6
+Creating 'alloc_traits.h.gcov'
+
+File '/usr/include/c++/4.7/bits/stl_vector.h'
+Lines executed:100.00% of 62
+Branches executed:100.00% of 78
+Taken at least once:50.00% of 78
+Calls executed:71.88% of 192
+Creating 'stl_vector.h.gcov'
+
+File '/usr/include/c++/4.7/bits/allocator.h'
+Lines executed:66.67% of 6
+No branches
+Calls executed:94.74% of 19
+Creating 'allocator.h.gcov'
+
+File '/usr/include/gtest/gtest-printers.h'
+Lines executed:0.00% of 28
+Branches executed:0.00% of 38
+Taken at least once:0.00% of 38
+Calls executed:0.00% of 52
+Creating 'gtest-printers.h.gcov'
+
+File '/usr/include/c++/4.7/ext/alloc_traits.h'
+Lines executed:100.00% of 2
+No branches
+Calls executed:100.00% of 3
+Creating 'alloc_traits.h.gcov'
+
+File '/usr/include/c++/4.7/bits/basic_string.h'
+Lines executed:44.44% of 9
+Branches executed:0.00% of 4
+Taken at least once:0.00% of 4
+Calls executed:28.57% of 7
+Creating 'basic_string.h.gcov'
+
+File '/usr/include/c++/4.7/bits/stl_iterator_base_funcs.h'
+Lines executed:0.00% of 4
+No branches
+Calls executed:0.00% of 2
+Creating 'stl_iterator_base_funcs.h.gcov'
+
+File '/usr/include/c++/4.7/bits/stl_iterator_base_types.h'
+Lines executed:0.00% of 3
+No branches
+No calls
+Creating 'stl_iterator_base_types.h.gcov'
+
+File '/usr/include/c++/4.7/ext/type_traits.h'
+Lines executed:0.00% of 2
+No branches
+No calls
+Creating 'type_traits.h.gcov'
+
+File '/usr/include/c++/4.7/sstream'
+Lines executed:0.00% of 1
+Branches executed:0.00% of 2
+Taken at least once:0.00% of 2
+Calls executed:0.00% of 5
+Creating 'sstream.gcov'
+
+File '/usr/include/c++/4.7/bits/basic_string.tcc'
+Lines executed:0.00% of 16
+Branches executed:0.00% of 16
+Taken at least once:0.00% of 16
+Calls executed:0.00% of 20
+Creating 'basic_string.tcc.gcov'
+
+File '/usr/include/c++/4.7/bits/basic_ios.h'
+Lines executed:0.00% of 4
+Branches executed:0.00% of 2
+Taken at least once:0.00% of 2
+Calls executed:0.00% of 1
+Creating 'basic_ios.h.gcov'
+
+File '/usr/include/gtest/gtest.h'
+Lines executed:47.83% of 23
+Branches executed:24.44% of 180
+Taken at least once:12.22% of 180
+Calls executed:18.49% of 357
+Creating 'gtest.h.gcov'
+
+File '/usr/include/c++/4.7/ostream'
+No executable lines
+No branches
+No calls
+Removing 'ostream.gcov'
+
+File '/usr/include/c++/4.7/streambuf'
+No executable lines
+No branches
+No calls
+Removing 'streambuf.gcov'
+
+File '/usr/include/c++/4.7/istream'
+No executable lines
+No branches
+No calls
+Removing 'istream.gcov'
+
+File '/usr/include/c++/4.7/iomanip'
+Lines executed:0.00% of 2
+No branches
+No calls
+Creating 'iomanip.gcov'
+
+File '/usr/include/gtest/gtest-message.h'
+Lines executed:0.00% of 4
+Branches executed:0.00% of 4
+Taken at least once:0.00% of 4
+Calls executed:0.00% of 12
+Creating 'gtest-message.h.gcov'
+
+File '/usr/include/gtest/gtest-test-part.h'
+Lines executed:0.00% of 1
+Branches executed:0.00% of 2
+Taken at least once:0.00% of 2
+Calls executed:0.00% of 3
+Creating 'gtest-test-part.h.gcov'
+
+File '/usr/include/gtest/internal/gtest-death-test-internal.h'
+Lines executed:0.00% of 2
+Branches executed:0.00% of 4
+Taken at least once:0.00% of 4
+Calls executed:0.00% of 6
+Creating 'gtest-death-test-internal.h.gcov'
+
+File '/usr/include/gtest/internal/gtest-string.h'
+Lines executed:9.09% of 11
+Branches executed:100.00% of 2
+Taken at least once:100.00% of 2
+Calls executed:20.00% of 5
+Creating 'gtest-string.h.gcov'
+
+File '/usr/include/c++/4.7/typeinfo'
+Lines executed:0.00% of 3
+Branches executed:0.00% of 6
+Taken at least once:0.00% of 6
+No calls
+Creating 'typeinfo.gcov'
+
+File '/usr/include/c++/4.7/limits'
+Lines executed:100.00% of 1
+No branches
+No calls
+Creating 'limits.gcov'
+
+File '/usr/include/c++/4.7/bits/locale_facets.h'
+Lines executed:0.00% of 5
+Branches executed:0.00% of 2
+Taken at least once:0.00% of 2
+Calls executed:0.00% of 2
+Creating 'locale_facets.h.gcov'
+
+File '/usr/include/c++/4.7/bits/ios_base.h'
+Lines executed:0.00% of 10
+No branches
+No calls
+Creating 'ios_base.h.gcov'
+
+File '/usr/include/c++/4.7/new'
+Lines executed:66.67% of 3
+No branches
+No calls
+Creating 'new.gcov'
+
+File '/usr/include/c++/4.7/ext/atomicity.h'
+Lines executed:0.00% of 10
+Branches executed:0.00% of 2
+Taken at least once:0.00% of 2
+Calls executed:0.00% of 3
+Creating 'atomicity.h.gcov'
+
+File '/usr/include/x86_64-linux-gnu/c++/4.7/bits/gthr-default.h'
+Lines executed:0.00% of 2
+No branches
+No calls
+Creating 'gthr-default.h.gcov'
+
+File '/usr/include/c++/4.7/bits/char_traits.h'
+Lines executed:0.00% of 6
+No branches
+No calls
+Creating 'char_traits.h.gcov'
+
