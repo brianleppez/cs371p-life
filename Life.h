@@ -7,468 +7,424 @@
 #include <sstream>
 #include <limits>
 using namespace std;
-//AbstractCell class
+
+/**
+ * AbstractCell is a class that contains many methods that are implemented by its children.
+ */
 class AbstractCell {
 protected:
+
+    /**
+    * A characteristic which tells us whether the cell is dead or alive
+    */
     bool _dead;
 private:
-    int _neighborCount;
+
+    /**
+    * Each cell has a count of its alive neighbors
+    */
+    unsigned int _neighborCount;
 public:
-    // Default constructor given for free.
-    AbstractCell() : _dead(true), _neighborCount(0){}
-    virtual void print(std::ostream& w) const = 0;
-    virtual char set(std::istream& input) {}
-    virtual void tryIncrementNC (bool angledNeighbor) { _neighborCount++; }
-    virtual int getAge() const {return 0;}
-    virtual string check_regulars() const {}
-    virtual string check_corners(int i) const {}
-    virtual string check_edges(int i) const {}
-    virtual AbstractCell* clone() const {}
-    virtual int kill_revive() {}
-    virtual void revive() {}
-    bool isDead() {return _dead;}
-    int getNeighborCount () { return _neighborCount; }
-    void incrementNC () { _neighborCount++; }
-    void resetNC () { _neighborCount = 0; }
-    // evolve = 0; foce conway and fredkin to define.
+
+    /**
+    * Constructor for AbstractCell. We want to initiate our Cell to be dead at the beginning.
+    */
+    AbstractCell ();
+
+    virtual ~AbstractCell () {}
+
+    /**
+    * virtual methods to be implemented by Conway and Fredkin. It prints the cell status.
+    */
+    virtual void print (std::ostream& w) const = 0;
+
+    /**
+    * Sets cell's attribute according to what is being read.
+    */
+    virtual char set (std::istream& input) = 0;
+
+    /**
+    * Helps Fredkin ignore angledneighbors
+    */
+    virtual void tryIncrementNC (bool);
+
+    /**
+    * A getter that allows Cell to see Fredkin's age
+    */
+    virtual unsigned int getAge () const;
+
+    /**
+    * It check neighbors ofregular cells i.e not a corner or edge cell, and 
+    * increments neighbor counts
+    */
+    virtual string check_regulars () const = 0;
+
+    /**
+    * Checks corner cells.
+    */
+    virtual string check_corners (int i) const = 0;
+
+    /**
+    * Checks edge cells
+    */
+    virtual string check_edges (int i) const = 0;
+
+    /**
+    * Creates a new AbstractCell Object with same attributes.
+    */
+    virtual AbstractCell* clone () const = 0;
+
+    /**
+    * A method that kills or revives cells based
+    */
+    virtual int kill_revive () = 0;
+
+    /**
+    * revives the cell
+    */
+    virtual void revive ();
+
+    /**
+    * Getter for _dead
+    */
+    bool isDead ();
+
+    /**
+    * Getter for _neighborCount
+    */
+    unsigned int getNeighborCount ();
+
+    /**
+    * Setter for _neighborCount that only increments
+    */
+    void incrementNC ();
+
+    /**
+    * Resets the neighborcount
+    */
+    void resetNC ();
 };
-//ConwayCell class
+
+/**
+* Cell based on Conway's rules. Inherits from AbstractCell
+*/
 class ConwayCell : public AbstractCell {
 public:
-    void print(ostream& w) const {
-        if(_dead){
-            w<<".";
-        }
-        else{
-            w<<"*";
-        }
-    }
-    char set(std::istream& input){
-        char c;
-        input>>c;
-        if (c == '.'){
-            _dead = true;
-        }
-        else if (c == '*'){
-            _dead = false;;
-        }
-        else {
-            cout<<"Bad input for ConwayCell";
-            assert(false);
-        }
-        return c;
-    }
-    /*Neighbor spots defined by ints (X is current cell):
-       2
-      1 3
-     0 X 4
-      7 5
-       6
-     */
-    string check_regulars() const {
-        if (_dead) {
-            return "";
-        }
-        else {
-            return "01234567";
-        }
-    }
-    string check_corners(int i) const {
-        /*Corner spot defined by ints:
-         0 1
-         2 3
-         */
-        if (_dead) {
-            return "";
-        }
-        else {
-            if (i == 0) {
-                return "456";
-            }
-            else if (i == 1){
-                return "670";
-            }
-            else if (i == 2){
-                return "234";
-            }
-            else if (i == 3){
-                return "012";
-            }
-            else{
-                cout<<"update count corner i is not 0 - 3";
-                assert(false);
-            }
-        }
-    }
-    string check_edges(int i) const {
-        /*Edge spot defined by ints
-          1
-         0 2
-          3
-         */
-        if (_dead) {
-            return "";
-        }
-        else {
-            if (i == 0) {
-                return "23456";
-            }
-            else if (i == 1){
-                return "45670";
-            }
-            else if (i == 2){
-                return "67012";
-            }
-            else if (i == 3){
-                return "01234";
-            }
-            else{
-                cout<<"update count edge i is not 0 - 3";
-                assert(false);
-            }
-        }
-    }
-    AbstractCell* clone() const{
-        return new ConwayCell(*this);
-    }
-    int kill_revive() {
-        int v = 0;
-        if (_dead) {
-            if (getNeighborCount() == 3) {
-                _dead = false;
-                v = 1;
-            }
-        }
-        else {
-            if (getNeighborCount() != 2 && getNeighborCount() != 3) {
-                _dead = true;
-                v = -1;
-            }
-        }
-        resetNC();
-        return v;
-    }
-    void revive() {
-        _dead = false;
-    }
+
+    /**
+    * Prints the symbol of the cell based on its status
+    */
+    void print (ostream&) const;
+
+    /**
+    * sets the status of the cell based on what it's reading.
+    */
+    char set (istream&);
+
+    /**
+    *  Checks the regular cells
+    *
+    * Neighbor spots defined by ints (X is current cell)
+    *  2
+    *  1 3
+    * 0 X 4
+    *  7 5
+    *   6
+    */
+    string check_regulars () const;
+
+    /**
+    * Checks corner cells
+    * Corner spot defined by ints:
+    * 0 1
+    * 2 3
+    */
+    string check_corners (int) const;
+
+    /**
+    * Checks edge cells
+    * Edge spot defined by ints
+    *    1
+    *   0 2
+    *    3
+    */
+    string check_edges (int) const;
+
+    /**
+    * Clones the cell
+    */
+    AbstractCell* clone () const;
+
+    /**
+    * Kills or revives the cell based on its neighbors
+    */
+    int kill_revive ();
+
+    /**
+    * Revives the cell
+    */
+    void revive ();
 };
-//FredkinCell class
+
+/**
+* Class based on the rules of Fredkin
+*/
 class FredkinCell : public AbstractCell {
 private:
+
+    /**
+    * Tells you the age of the cell
+    */
     unsigned int _age;
 public:
-    void print(ostream& w) const{
-        if(_dead){
-            w << "-";
-        }
-        else if (_age > 9){
-            w << "+";
-        }
-        else{
-            w << _age;
-        }
-    }
-    char set(std::istream& input){
-        char c;
-        input >> c;
-        if (c == '-'){
-            _dead = true;
-            _age = 0;
-        }
-        else if (c >= '0' && c <= '9') {
-            _dead = false;
-            _age = c - '0';
-        }
-        else if (c == '+'){
-            _dead = false;
-            _age = 10;
-        }
-        else {
-            cout<<"Bad input for FredkinCell";
-            assert(false);
-        }
-        return c;
-    }
-    void tryIncrementNC (bool angledNeighbor) {
-        if (!angledNeighbor) {
-            incrementNC();
-        }
-    }
-    int getAge () const{
-        return _age;
-    }
-    /*Neighbor spots defined by ints (X is current cell):
-       2
-      1 3
-     0 X 4
-      7 5
-       6
-     */
-    string check_regulars() const{
-        if (_dead) {
-            return "";
-        }
-        else {
-            return "0246";
-        }
-    }
-    string check_corners(int i) const{
-        /*Corner spot defined by ints:
-         0 1
-         2 3
-         */
-        if (_dead) {
-            return "";
-        }
-        else {
-            if (i == 0) {
-                return "46";
-            }
-            else if (i == 1){
-                return "60";
-            }
-            else if (i == 2){
-                return "24";
-            }
-            else if (i == 3){
-                return "02";
-            }
-            else{
-                cout<<"update count corner i is not 0 - 3";
-                assert(false);
-            }
-        }
-    }
-    string check_edges(int i) const{
-        /*Edge spot defined by ints
-          1
-         0 2
-          3
-         */
-        if (_dead) {
-            return "";
-        }
-        else {
-            if (i == 0) {
-                return "246";
-            }
-            else if (i == 1){
-                return "460";
-            }
-            else if (i == 2){
-                return "602";
-            }
-            else if (i == 3){
-                return "024";
-            }
-            else{
-                cout<<"update count corner i is not 0 - 3";
-                assert(false);
-            }
-        }
-    }
-    AbstractCell* clone() const{
-        return new FredkinCell(*this);
-    }
-    int kill_revive() {
-        int v = 0;
-        if (_dead) {
-            if (getNeighborCount() == 3 || getNeighborCount() == 1) {
-                _dead = false;
-                v = 1;
-            }
-        }
-        else {
-            if (getNeighborCount() == 2 || getNeighborCount() == 0 || getNeighborCount() == 4) {
-                _dead = true;
-                v = -1;
-            }
-            else {
-                _age++;
-            }
-        }
-        resetNC();
-        return v;
-    }
+
+    /**
+    * Prints the status of the cell based on whether it's dead or alive
+    */
+    void print (ostream&) const;
+
+    /**
+    * Sets the attributes of the cell based on what it's reading.
+    */
+    char set (istream&);
+
+    /**
+    * Increments its neighbor
+    */
+    void tryIncrementNC (bool);
+
+    /**
+    * Getter for the age
+    */
+    unsigned int getAge () const;
+
+    /**
+    * Checks regular cells
+    * Neighbor spots defined by ints (X is current cell):
+    *   2
+    *  1 3
+    * 0 X 4
+    *  7 5
+    *   6
+    */
+    string check_regulars () const;
+
+    /**
+    * Checks the corner cells
+    * Corner spot defined by ints:
+    * 0 1
+    * 2 3
+    */
+    string check_corners (int) const;
+
+    /**
+    * Checks edge cells
+    * Edge spot defined by ints
+    *      1
+    *     0 2
+    *      3
+    */
+    string check_edges (int) const;
+
+    /**
+    * Clones the attributes of the cell into another cell
+    */
+    AbstractCell* clone () const;
+
+    /**
+    * Kills or revives the cell based on its neighbor count
+    */
+    int kill_revive ();
 };
-class Cell{
+/**
+* Cell class that it used as a wrapper for AbstractCell
+*/
+class Cell {
 public:
+
+    /**
+    * A pointer to the original cell to manage.
+    */
     AbstractCell* _p;
-    Cell (AbstractCell* p = new FredkinCell()) : _p (p){}
-    Cell (const Cell& other) : _p (other._p->clone()){}
-    ~Cell(){ delete _p;}
-    Cell& operator = (const Cell& other) {
-        if (this != &other){
-            delete _p;
-            _p = other._p->clone();
-        }
-        return *this;
-    }
-    void print(ostream& w) const {
-        return _p->print(w);
-    }
-    char set(std::istream& input){
-        return _p->set(input);
-    }
-    /*Neighbor spots defined by ints (X is current cell):
-        2
-       1 3
-      0 X 4
-       7 5
-        6
-      */
-    string check_regulars() const {
-        if (_p->isDead()) {
-            return "";
-        }
-        else {
-            return "01234567";
-        }
-    }
-    string check_corners(int i) const {
-        /*Corner spot defined by ints:
-         0 1
-         2 3
-         */
-        if (_p->isDead()) {
-            return "";
-        }
-        else {
-            if (i == 0) {
-                return "456";
-            }
-            else if (i == 1){
-                return "670";
-            }
-            else if (i == 2){
-                return "234";
-            }
-            else if (i == 3){
-                return "012";
-            }
-            else{
-                cout<<"update count corner i is not 0 - 3";
-                assert(false);
-            }
-        }
-    }
-    string check_edges(int i) const {
-        /*Edge spot defined by ints
-          1
-         0 2
-          3
-         */
-        if (_p->isDead()) {
-            return "";
-        }
-        else {
-            if (i == 0) {
-                return "23456";
-            }
-            else if (i == 1){
-                return "45670";
-            }
-            else if (i == 2){
-                return "67012";
-            }
-            else if (i == 3){
-                return "01234";
-            }
-            else{
-                cout<<"update count edge i is not 0 - 3";
-                assert(false);
-            }
-        }
-    }
-    void tryIncrementNC(bool angledNeighbor) { _p->tryIncrementNC(angledNeighbor);}
-    int kill_revive() {
-        int v = _p->kill_revive();
-        if(v == 0) {
-            if(_p->getAge() == 2){
-                *this = new ConwayCell();
-                _p->revive();
-            }
-        }
-        return v;
-    }
-    int getNeighborCount () { return _p->getNeighborCount();}
+
+    /**
+    * Default constructor for Cell
+    */
+    Cell (AbstractCell* = new FredkinCell());
+
+    /**
+    * Copy constructor of the Cell class
+    */
+    Cell (const Cell&);
+
+    /**
+    * Destructor for the Cell Class
+    */
+    ~Cell ();
+
+    /**
+    * Copy assignment for the Cell Class
+    */
+    Cell& operator = (const Cell&);
+
+    /**
+    * Prints the cell based on what type of Cell it's being instantiated
+    */
+    void print (ostream&) const;
+    /**
+    * Sets the cell based on what it's reading and what cell it's being instantiated
+    */
+    char set (istream&);
+
+    /**
+    * Checks regular Cells
+    * Neighbor spots defined by ints (X is current cell):
+    *    2
+    *   1 3
+    *  0 X 4
+    *   7 5
+    *    6
+    */
+    string check_regulars () const;
+
+    /**
+    * Check corner cells.
+    * Corner spot defined by ints:
+    * 0 1
+    * 2 3
+    */
+    string check_corners (int) const;
+
+    /**
+    * Checks edge cells
+    * Edge spot defined by ints
+    *  1
+    * 0 2
+    *  3
+    */
+    string check_edges (int) const;
+
+    /**
+    * Tries to increment it's diangonal neighbors
+    */
+    void tryIncrementNC (bool);
+
+    /**
+    * Kills or revives cell based on its neighbor counts
+    */
+    int kill_revive ();
+
+    /**
+    * Gets neighbor count
+    */
+    int getNeighborCount ();
 };
-//Life class
+
+/**
+* Class life that handles different types of cells.
+*/
 template <typename T>
-class Life{
+class Life {
 private:
+
+    /**
+    * Number of rows of Life board
+    */
     unsigned int _rows;
+
+    /**
+    * Number of columns of Life board
+    */
     unsigned int _cols;
+
+    /**
+    * The amount of alive cells in the board
+    */
     unsigned int _population;
+
+    /**
+    * How many iterations of the game have been played
+    */
     unsigned int _generation;
-    vector<vector<T > > _board;
+
+    /**
+    * The board where to place the cells
+    */
+    vector <vector <T > > _board;
 public:
-    Life(unsigned int rows, unsigned int columns) :
-    _rows(rows),
-    _cols(columns),
-    _population(0),
-    _generation(0),
-    _board(rows, vector<T>(columns))
-    {}
-    void life_set(std::istream& r = std::cin) {
+
+    /**
+    * Constructor of Life with rows and columns given
+    */
+    Life (unsigned int rows, unsigned int columns) :
+        _rows (rows),
+        _cols (columns),
+        _population (0),
+        _generation (0),
+        _board (rows, vector<T> (columns))
+        {}
+
+    /**
+    * Calls the set for the appropriate cell
+    */
+    void life_set (istream& r) {
         for (unsigned int i = 0; i < _rows; ++i) {
             for (unsigned int j = 0; j < _cols; ++j) {
                 char c =_board[i][j].set(r);
-                if ((c >= '0' && c <= '9') || c == '*' || c == '+') {
-                    _population++;
-                }
+                    if ((c >= '0' && c <= '9') || c == '*' || c == '+') {
+                        _population++;
+                    }
             }
         }
     }
-    void life_read (istream& r = std::cin) {
+
+    /**
+    * Prints the board
+    */
+    void life_read (istream& r = cin) {
         r.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         r.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         r.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         life_set(r);
         r >> ws;
     }
-    void life_print(std::ostream& w = std::cout) const {
-        w<<"Generation = "<<_generation<<", Population = "<<_population<<"."<<endl;
-        for (unsigned int i = 0; i < _rows; i++){
-            for (unsigned int j = 0; j < _cols; j++){
+
+    /**
+    * Prints the board
+    */
+    void life_print (ostream& w = cout) const {
+        w << "Generation = " << _generation << ", Population = " << _population<< "." <<endl;
+        for (unsigned int i = 0; i < _rows; i++) {
+            for (unsigned int j = 0; j < _cols; j++) {
                 _board[i][j].print(w);
             }
-            w<<endl;
+            w << endl;
         }
-        w<<endl;
+        w << endl;
     }
-    void update_neighbor_count(int row, int col, char neighbor){
-        //Given the coordinates of a live cell, updates the neighbor count
-        //in the direction of "neighbor".
-        if (neighbor == '0') {
-            _board[row][col - 1].tryIncrementNC(false);
-        }
-        else if (neighbor == '1') {
-            _board[row - 1][col - 1].tryIncrementNC(true);
-        }
-        else if (neighbor == '2') {
-            _board[row - 1][col].tryIncrementNC(false);
-        }
-        else if (neighbor == '3') {
-            _board[row - 1][col + 1].tryIncrementNC(true);
-        }
-        else if (neighbor == '4') {
-            _board[row][col + 1].tryIncrementNC(false);
-        }
-        else if (neighbor == '5') {
-            _board[row + 1][col + 1].tryIncrementNC(true);
-        }
-        else if (neighbor == '6') {
-            _board[row + 1][col].tryIncrementNC(false);
-        }
-        else if (neighbor == '7') {
-            _board[row + 1][col - 1].tryIncrementNC(true);
-        }
+
+    /**
+    * Given the coordinates of a live cell, updates the neighbor count
+    * in the direction of "neighbor".
+    */
+    void update_neighbor_count (unsigned int row, unsigned int col, char neighbor) {
+        assert(neighbor >= '0' && neighbor <= '7');
+        if (neighbor == '0') { _board[row][col - 1].tryIncrementNC(false);}
+        else if (neighbor == '1') { _board[row - 1][col - 1].tryIncrementNC(true);}
+        else if (neighbor == '2') { _board[row - 1][col].tryIncrementNC(false);}
+        else if (neighbor == '3') { _board[row - 1][col + 1].tryIncrementNC(true);}
+        else if (neighbor == '4') { _board[row][col + 1].tryIncrementNC(false);}
+        else if (neighbor == '5') { _board[row + 1][col + 1].tryIncrementNC(true);}
+        else if (neighbor == '6') { _board[row + 1][col].tryIncrementNC(false);}
+        else { _board[row + 1][col - 1].tryIncrementNC(true);}
     }
-    void update_counts(){
-        //Updates the neighbor counts by going through every spot in the board and incrementing
-        //corresponding neighbors to live cells (starts with corners, then does edges, then
-        //internal cells to avoid checking for boundaries for every node)
+
+    /**
+    * Updates the neighbor counts by going through every spot in the board and incrementing
+    * corresponding neighbors to live cells (starts with corners, then does edges, then
+    * internal cells to avoid checking for boundaries for every node)
+    */
+    void update_counts () {
         string cornerNeighborsToUpdate = "";
         string neighbor = "";
         int len = 0;
@@ -535,6 +491,10 @@ public:
             }
         }
     }
+
+    /**
+    * Kills or revives the board
+    */
     void life_kill_revive() {
         for (unsigned i = 0; i < _rows; ++i) {
             for (unsigned j = 0; j < _cols; ++j) {
@@ -542,17 +502,17 @@ public:
             }
         }
     }
+
+    /**
+    * Runs the game
+    */
     void life_run (unsigned int generations, unsigned int interval = 1) {
-        if (_generation == 0) {
-            life_print();
-        }
+        if (_generation == 0) { life_print();}
         for (unsigned int i = 1; i <= generations; ++i) {
             update_counts();
             life_kill_revive();
             _generation++;
-            if (i % interval == 0) {
-                life_print();
-            }
+            if (i % interval == 0) { life_print();}
         }
     }
 };
