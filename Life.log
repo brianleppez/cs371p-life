@@ -1,0 +1,186 @@
+commit fae06fef33339f2d67f27ebfefebbac25a490067
+Author: Brian Leppez <brianleppez@gmail.com>
+Date:   Sun Nov 23 23:27:57 2014 -0600
+
+    added html folder
+
+commit 26cba3f3df2c66fcec2354c27350f3c2d9ee7734
+Author: Kevin Byers <kevinb@cs.utexas.edu>
+Date:   Sun Nov 23 23:10:36 2014 -0600
+
+    138 tests done
+
+commit 75138e7e167fbf22a47693f0e67e7fb84a1f6b13
+Author: Brian Leppez <brianleppez@gmail.com>
+Date:   Sun Nov 23 22:18:59 2014 -0600
+
+    Got format working. Header and implementation work together
+
+commit be886dd810039ae7a359c6e7b114460d3cff8a31
+Author: Kevin Byers <kevinb@cs.utexas.edu>
+Date:   Sun Nov 23 17:58:48 2014 -0600
+
+    starting tests
+
+commit 3a86b90cfc4431c24f62cd3a2e39d76e408b378a
+Author: kbyers <kevinbyers@utexas.edu>
+Date:   Sun Nov 23 01:27:29 2014 -0600
+
+    Everything works!
+
+commit a5c0d55c31252a71e171cd69866a2507404ca641
+Author: Brian Leppez <brianleppez@gmail.com>
+Date:   Sat Nov 22 18:26:19 2014 -0600
+
+    added debugging code
+
+commit 38373d1f9c56da316d3dbf1d4fc1ca6bd3856c5d
+Author: Brian Leppez <brianleppez@gmail.com>
+Date:   Sat Nov 22 17:55:41 2014 -0600
+
+    Got Cell working in Brian's way, Conway Cell's are not updating correctly after being changed
+
+commit deb4592f5b350e898d2bf21394217d3c6395ac18
+Author: Kevin Byers <kevinb@cs.utexas.edu>
+Date:   Sat Nov 22 16:08:20 2014 -0600
+
+    Fixed compile errors for cell implementation
+
+commit fb18bd586ec460693d45f389a3a0d9ca997aed8b
+Author: Kevin Byers <kevinb@cs.utexas.edu>
+Date:   Sat Nov 22 14:25:01 2014 -0600
+
+    started cell
+
+commit 4230bc66558e6ffa550e1869af642e4f329075e5
+Author: Kevin Byers <kevinb@cs.utexas.edu>
+Date:   Sat Nov 22 13:20:59 2014 -0600
+
+    more elegant fix to bad initialization of neighbor count
+
+commit 2e50beca3c238aec4d4d364ac1461b155972483b
+Author: kbyers <kevinbyers@utexas.edu>
+Date:   Fri Nov 21 16:09:37 2014 -0600
+
+    Fixed neighbor count initialization issue and deleted the neighbor count board that we were not using
+
+commit 5ce22f83c069cce7b82fced0bd310f4d712b8fe3
+Author: kbyers <kevinbyers@utexas.edu>
+Date:   Fri Nov 21 15:34:05 2014 -0600
+
+    fixed incrementNC problem when Fredkin and Conway are on the board at the same time
+
+commit d6e821f2235fe45a8509d558cb975ccfa99f8a74
+Author: Brian Leppez <brianleppez@gmail.com>
+Date:   Wed Nov 19 22:31:46 2014 -0600
+
+    Finished Conway and Fredkin
+
+commit 56ad7df4b5df08f9d20c42b5cf4a9db638cc7d78
+Author: Brian Leppez <brianleppez@Brians-MacBook-Pro.local>
+Date:   Wed Nov 19 18:53:33 2014 -0600
+
+    Made API a bit cleaner
+
+commit 00eeb8036ac97d91538e3c777b7a37d8d0b05a03
+Author: Brian Leppez <brianleppez@wireless-10-147-186-69.public.utexas.edu>
+Date:   Wed Nov 19 15:25:57 2014 -0600
+
+    Changed the way RunLife creates Life object so that it creates one object instead of 3
+
+commit 3884438f42ed0ebeb70410aa004845cf669b6345
+Author: Brian Leppez <brianleppez@Brians-MBP.attlocal.net>
+Date:   Wed Nov 19 00:16:16 2014 -0600
+
+    Made code a little bit cleaner
+
+commit fd22419f012a3350ce053762465d44153a66cee3
+Author: Brian Leppez <brianleppez@gmail.com>
+Date:   Tue Nov 18 22:48:45 2014 -0600
+
+    Fixes implementing reading and writing
+
+commit 0e98d4123d9f9ac74ead4721fa3bb8005e1315a6
+Author: Brian Leppez <brianleppez@Brians-MBP.attlocal.net>
+Date:   Tue Nov 18 22:13:05 2014 -0600
+
+    cleaning out code a bit
+
+commit feac12df703b1ddf12357eaa4550cbba508e2c4f
+Author: Brian Leppez <brianleppez@gmail.com>
+Date:   Tue Nov 18 16:07:06 2014 -0600
+
+    I hate git
+
+commit c3304d862c101c300a4d21e86ac1656b68e8762a
+Author: kbyers <kevinbyers@utexas.edu>
+Date:   Tue Nov 18 15:47:51 2014 -0600
+
+    updating neighbor counts successfully
+
+commit 12afb25fb3ed87a9054295091c392f98e9d25c9c
+Author: kbyers <kevinbyers@utexas.edu>
+Date:   Tue Nov 18 15:37:09 2014 -0600
+
+    updating neighbor counts successfully
+
+commit 50d8833e2e07755aab856023d6c706b691a5f90d
+Author: Brian Leppez <brianleppez@gmail.com>
+Date:   Tue Nov 18 13:09:41 2014 -0600
+
+    Started writing RunLife handler
+
+commit f78423f19107b667edc52d874ef669bda98b90a2
+Author: Brian Leppez <brianleppez@gmail.com>
+Date:   Mon Nov 17 13:41:26 2014 -0600
+
+    Still messing with interface
+
+commit 0ee50468408fa492c51e5a5ed73e0bd6acd905d2
+Author: Brian Leppez <brianleppez@wireless-10-147-32-2.public.utexas.edu>
+Date:   Mon Nov 17 12:41:13 2014 -0600
+
+    Made changes to design
+
+commit e77add35b650ea05b96336fd357a6b8c2a3e9f87
+Author: Kevin Byers <kevinb@cs.utexas.edu>
+Date:   Fri Nov 14 17:43:47 2014 -0600
+
+    reading and printing
+
+commit 42c830e683a26da45295f18615fc64f3c1a41cd5
+Merge: b3f1da4 7bf6415
+Author: Brian Leppez <brianleppez@gmail.com>
+Date:   Fri Nov 14 17:41:14 2014 -0600
+
+    Merge branch 'master' of https://github.com/brianleppez/cs371p-life
+
+commit b3f1da4a3ab33f115d9640ee86d94f45f2dd889d
+Author: Brian Leppez <brianleppez@gmail.com>
+Date:   Fri Nov 14 17:40:51 2014 -0600
+
+    added readme and gitignore
+
+commit 7bf6415b31020fe912030b7ad8ae2eca444972ba
+Author: Brian Leppez <brianleppez@gmail.com>
+Date:   Fri Nov 14 14:12:04 2014 -0600
+
+    Create README.md
+
+commit 40b3c5ed4b4254ac787d7ba469c87210004912ac
+Author: Brian Leppez <brianleppez@gmail.com>
+Date:   Fri Nov 14 14:11:34 2014 -0600
+
+    added skeleton files
+
+commit 64d0695fa3b52bffd7ce53df1f797ae5de8ef643
+Author: Brian Leppez <brianleppez@gmail.com>
+Date:   Fri Nov 14 14:10:43 2014 -0600
+
+    Create README.md
+
+commit e65d53bcb4c3485a3f8879f1e2b16dcd4a5c06b8
+Author: Brian Leppez <brianleppez@gmail.com>
+Date:   Fri Nov 14 14:09:38 2014 -0600
+
+    first commit
